@@ -1,0 +1,25 @@
+{
+  "name": "transport-server",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ignore-path .gitignore --ext .js ./app",
+    "start": "babel-node app/index.js",
+    "nodemon": "nodemon app/index.js --exec babel-node"
+  },
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "eslint": "^4.19.1",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.16"
+  },
+  "devDependencies": {
+    "babel": "^5.8.38",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.1",
+    "nodemon": "^1.17.3"
+  }
+}
