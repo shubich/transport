@@ -1,6 +1,13 @@
 <template>
-  <Page>
+  <Page class="login-page">
     <div class="container">
+      <div
+        v-if="authStatus"
+        class="status"
+        :class="authStatus"
+      >
+        Status: {{authStatus}}
+      </div>
       <form @submit.prevent="onSubmit">
         <label>
           <div>Номер карты</div>
@@ -27,8 +34,7 @@ import Button from '@/components/Form/Button';
 
 const {
   mapActions,
-  // mapGetters,
-  // mapState,
+  mapGetters,
 } = createNamespacedHelpers('auth');
 
 export default {
@@ -44,6 +50,12 @@ export default {
       password: '',
     };
   },
+  computed: {
+    ...mapGetters([
+      'isAuthenticated',
+      'authStatus',
+    ]),
+  },
   methods: {
     ...mapActions([
       'signin',
@@ -55,13 +67,32 @@ export default {
       }
     },
   },
+  watch: {
+    isAuthenticated() {
+      if (this.isAuthenticated) {
+        this.$router.push('/');
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
-  .container {
+  .login-page {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .status {
+    margin-bottom: 10px;
+  }
+
+  .status.error {
+    color: red;
+  }
+
+  .status.loading {
+    color: blue;
   }
 </style>

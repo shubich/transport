@@ -8,7 +8,7 @@ export function signin(req, res) {
       if (!user) {
         res.status(403).send({ auth: false, message: 'User is not found' });
       } else {
-        // user.saveToken(res);
+        UserService.saveToken(res, user);
         res.status(200).send({ auth: true, message: 'Login successful' });
       }
     })
@@ -23,7 +23,7 @@ export function signup(req, res) {
       if (!user) {
         res.status(403).send({ auth: false, message: 'Registration error' });
       } else {
-        // user.saveToken(res);
+        UserService.saveToken(res, user);
         res.status(200).send({ auth: true, message: 'Successful registration' });
       }
     })

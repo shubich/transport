@@ -7,7 +7,7 @@ export default {
   },
   [MUTATIONS.AUTH_SUCCESS]: (state, resp) => {
     state.status = 'success';
-    state.token = resp.headers.get('Authorization');
+    state.token = resp.headers.authorization;
     state.hasLoadedOnce = true;
   },
   [MUTATIONS.AUTH_ERROR]: (state) => {

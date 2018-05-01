@@ -13,7 +13,8 @@ export default {
 <style scoped>
   .page {
     background: white;
-    max-width: 800px;
     margin: 0 auto;
+    max-width: 800px;
+    min-height: 100vh;
   }
 </style>

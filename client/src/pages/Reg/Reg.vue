@@ -1,6 +1,13 @@
 <template>
-  <Page>
+  <Page class="reg-page">
     <div class="container">
+      <div
+        v-if="authStatus"
+        class="status"
+        :class="authStatus"
+      >
+        Status: {{authStatus}}
+      </div>
       <form @submit.prevent="onSubmit">
         <label>
           <div>Город</div>
@@ -30,8 +37,7 @@ import Button from '@/components/Form/Button';
 
 const {
   mapActions,
-  // mapGetters,
-  // mapState,
+  mapGetters,
 } = createNamespacedHelpers('auth');
 
 export default {
@@ -48,6 +54,12 @@ export default {
       password: '',
     };
   },
+  computed: {
+    ...mapGetters([
+      'isAuthenticated',
+      'authStatus',
+    ]),
+  },
   methods: {
     ...mapActions([
       'signup',
@@ -59,13 +71,32 @@ export default {
       }
     },
   },
+  watch: {
+    isAuthenticated() {
+      if (this.isAuthenticated) {
+        this.$router.push('/');
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
-  .container {
+  .reg-page {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .status {
+    margin-bottom: 10px;
+  }
+
+  .status.error {
+    color: red;
+  }
+
+  .status.loading {
+    color: blue;
   }
 </style>
