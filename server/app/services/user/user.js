@@ -1,11 +1,12 @@
+import jwt from 'jsonwebtoken';
+import SECRET from './pem';
 import UserSchema from './userSchema';
 
 export default class User {
-  static signup(cardNumber, password, location) {
+  static signup(cardNumber, password) {
     const user = new UserSchema({
       cardNumber,
       password,
-      location,
     });
 
     return user.save()
@@ -33,5 +34,36 @@ export default class User {
 
   static getUserByCardNumber(cardNumber) {
     return UserSchema.findOne({ cardNumber });
+  }
+
+  static authentication(token) {
+    const { uid } = this.decodeToken(token);
+
+    return this.getUserByid(uid)
+      .then((user) => {
+        if (!user) return null;
+        return (this.isJwtTokenExpired(token) ? user : null);
+      })
+      .catch(() => null);
+  }
+
+  static saveToken(res, user) {
+    res.set('Access-Control-Expose-Headers', 'Authorization, Set-Cookie');
+    res.set('Authorization', `${this.jwtSign(user)}`);
+  }
+
+  static jwtSign(user) {
+    return jwt.sign({
+      uid: user._id,
+      cardNumber: user.cardNumber,
+    }, SECRET, { expiresIn: '7d' });
+  }
+
+  static isJwtTokenExpired(token) {
+    return jwt.verify(token, SECRET);
+  }
+
+  static decodeToken(token) {
+    return jwt.decode(token);
   }
 }

@@ -1,15 +1,47 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HelloWorld from '@/components/HelloWorld';
+import store from '@/store';
+import Home from '@/pages/Home';
+import Login from '@/pages/Login';
+import Reg from '@/pages/Reg';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld,
+      name: 'Home',
+      component: Home,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login,
+      meta: { requiresNotAuth: true },
+    },
+    {
+      path: '/reg',
+      name: 'Reg',
+      component: Reg,
+      meta: { requiresNotAuth: true },
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = store.getters['auth/isAuthenticated'];
+  const isAuthRequired = to.matched.some(record => record.meta.requiresAuth);
+  const isNotAuthRequired = to.matched.some(record => record.meta.requiresNotAuth);
+
+  if (isAuthRequired && !isAuthenticated) {
+    next({ path: '/login' });
+  } else if (isNotAuthRequired && isAuthenticated) {
+    next({ path: '/' });
+  } else {
+    next(); // make sure to always call next()!
+  }
+});
+
+export default router;

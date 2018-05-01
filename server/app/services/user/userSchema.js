@@ -13,10 +13,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  location: {
-    type: String,
-    trim: true,
-  },
   active: {
     type: Boolean,
     default: true,
