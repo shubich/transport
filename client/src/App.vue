@@ -14,5 +14,6 @@ export default {
 body {
   margin: 0;
   background: lightgrey;
+  font-family: Arial;
 }
 </style>

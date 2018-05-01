@@ -8,17 +8,20 @@
       >
         Status: {{authStatus}}
       </div>
-      <form @submit.prevent="onSubmit">
-        <label>
-          <div>Номер карты</div>
-          <Input type='text' v-model="cardNumber" />
+      <form
+        @submit.prevent="onSubmit"
+        class="form"
+      >
+        <label class="form-group">
+          <Input class="form-control" type='text' v-model="cardNumber" />
+          <div class="control-label">Номер карты</div>
         </label>
-        <label>
-          <div>Пароль</div>
-          <Input type='password' v-model="password" />
+        <label class="form-group">
+          <Input class="form-control" type='password' v-model="password" />
+          <div class="control-label">Пароль</div>
         </label>
-        <div>
-          <Button text='Зарегистрироваться' />
+        <div class="form-group">
+          <Button text='Зарегистрироваться' type='primary' />
         </div>
       </form>
     </div>
@@ -77,6 +80,30 @@ export default {
 </script>
 
 <style scoped>
+  .form {
+    width: 300px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-bottom: 20px;
+  }
+
+  .control-label {
+    color: #4f5256;
+    opacity: .5;
+  }
+
+  .form-control:focus ~ .control-label {
+    color: #448aff;
+    opacity: 1;
+  }
+
+  .control-label {
+    margin-bottom: 5px;
+  }
+
   .status {
     margin-bottom: 10px;
   }
