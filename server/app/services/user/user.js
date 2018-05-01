@@ -3,11 +3,10 @@ import SECRET from './pem';
 import UserSchema from './userSchema';
 
 export default class User {
-  static signup(cardNumber, password, location) {
+  static signup(cardNumber, password) {
     const user = new UserSchema({
       cardNumber,
       password,
-      location,
     });
 
     return user.save()

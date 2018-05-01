@@ -1,5 +1,5 @@
 <template>
-  <Page class="login-page">
+  <Page center>
     <div class="container">
       <div
         v-if="authStatus"
@@ -18,7 +18,7 @@
           <Input type='password' v-model="password" />
         </label>
         <div>
-          <router-link to="reg">Зарегистрироваться</router-link>
+          <router-link to="reg">Регистрация</router-link>
           <Button text='Войти' />
         </div>
       </form>
@@ -78,12 +78,6 @@ export default {
 </script>
 
 <style scoped>
-  .login-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
   .status {
     margin-bottom: 10px;
   }

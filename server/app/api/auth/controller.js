@@ -16,9 +16,9 @@ export function signin(req, res) {
 }
 
 export function signup(req, res) {
-  const { cardNumber, password, location } = req.body;
+  const { cardNumber, password } = req.body;
 
-  UserService.signup(cardNumber, password, location)
+  UserService.signup(cardNumber, password)
     .then((user) => {
       if (!user) {
         res.status(403).send({ auth: false, message: 'Registration error' });

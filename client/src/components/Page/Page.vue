@@ -1,5 +1,8 @@
 <template>
-  <div class="page">
+  <div
+    class="page"
+    :class="{center: center}"
+  >
     <slot></slot>
   </div>
 </template>
@@ -7,6 +10,9 @@
 <script>
 export default {
   name: 'Page',
+  props: {
+    center: Boolean,
+  },
 };
 </script>
 
@@ -16,5 +22,11 @@ export default {
     margin: 0 auto;
     max-width: 800px;
     min-height: 100vh;
+  }
+
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 </style>

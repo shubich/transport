@@ -1,5 +1,5 @@
 <template>
-  <Page class="reg-page">
+  <Page center>
     <div class="container">
       <div
         v-if="authStatus"
@@ -9,10 +9,6 @@
         Status: {{authStatus}}
       </div>
       <form @submit.prevent="onSubmit">
-        <label>
-          <div>Город</div>
-          <Input type='text' v-model="location" />
-        </label>
         <label>
           <div>Номер карты</div>
           <Input type='text' v-model="cardNumber" />
@@ -49,7 +45,6 @@ export default {
   },
   data() {
     return {
-      location: '',
       cardNumber: '',
       password: '',
     };
@@ -65,9 +60,9 @@ export default {
       'signup',
     ]),
     onSubmit() {
-      const { location, cardNumber, password } = this;
+      const { cardNumber, password } = this;
       if (cardNumber && password) {
-        this.signup({ location, cardNumber, password });
+        this.signup({ cardNumber, password });
       }
     },
   },
@@ -82,12 +77,6 @@ export default {
 </script>
 
 <style scoped>
-  .reg-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
   .status {
     margin-bottom: 10px;
   }
