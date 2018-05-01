@@ -1,7 +1,7 @@
 <template>
   <MainPage>
     <div class="container">
-      Map
+      <div id="map"></div>
     </div>
   </MainPage>
 </template>
@@ -14,9 +14,33 @@ export default {
   components: {
     MainPage,
   },
+  data() {
+    return {
+      myMap: null,
+    };
+  },
+  mounted() {
+    /* eslint-disable-next-line */
+    ymaps.ready(this.initMap);
+  },
+  methods: {
+    initMap() {
+      /* eslint-disable-next-line */
+      this.myMap = new ymaps.Map('map', {
+        center: [52.099593, 23.758761],
+        zoom: 15,
+      });
+    },
+  },
 };
 </script>
 
 <style scoped>
-
+  #map {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 49px;
+    left: 0;
+  }
 </style>
