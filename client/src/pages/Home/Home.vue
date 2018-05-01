@@ -1,19 +1,19 @@
 <template>
-  <Page class="home-page">
+  <MainPage class="home-page">
     <div class="container">
       <pre>{{user}}</pre>
     </div>
-  </Page>
+  </MainPage>
 </template>
 
 <script>
 import axios from 'axios';
-import Page from '@/components/Page';
+import MainPage from '@/components/Page/MainPage';
 
 export default {
   name: 'Home',
   components: {
-    Page,
+    MainPage,
   },
   data() {
     return {
