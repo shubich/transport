@@ -1,7 +1,7 @@
 <template>
   <MainPage>
     <div class="container">
-      Map
+      A -> B
     </div>
   </MainPage>
 </template>
@@ -10,7 +10,7 @@
 import MainPage from '@/components/Page/MainPage';
 
 export default {
-  name: 'Home',
+  name: 'Routes',
   components: {
     MainPage,
   },

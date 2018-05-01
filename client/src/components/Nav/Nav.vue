@@ -5,12 +5,12 @@
     <router-link to="/" exact class="block" active-class="active">
       Карта
     </router-link>
-    <div class="block">
+    <router-link to="/routes" class="block" active-class="active">
       Маршруты
-    </div>
-    <div class="block">
+    </router-link>
+    <router-link to="/profile" class="block" active-class="active">
       Профиль
-    </div>
+    </router-link>
   </nav>
 </template>
 
@@ -35,6 +35,7 @@ export default {
     padding: 15px 0;
     flex: 1 1 100%;
     text-align: center;
+    color: $black;
 
     &:hover, &:focus {
       background: $primary;
