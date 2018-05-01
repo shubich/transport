@@ -1,25 +1,27 @@
 <template>
   <Page center>
     <div class="container">
-      <div
+      <Alert
         v-if="authStatus"
         class="status"
-        :class="authStatus"
+        :type="ALERT_TYPES[authStatus]"
+        :text="authStatus"
+      />
+      <form
+        @submit.prevent="onSubmit"
+        class="form"
       >
-        Status: {{authStatus}}
-      </div>
-      <form @submit.prevent="onSubmit">
-        <label>
-          <div>Номер карты</div>
-          <Input type='text' v-model="cardNumber" />
+        <label class="form-group">
+          <div class="control-label">Номер карты</div>
+          <Input class="form-control" type='text' v-model="cardNumber" />
         </label>
-        <label>
-          <div>Пароль</div>
-          <Input type='password' v-model="password" />
+        <label class="form-group">
+          <div class="control-label">Пароль</div>
+          <Input class="form-control" type='password' v-model="password" />
         </label>
-        <div>
+        <div class="form-group summary">
           <router-link to="reg">Регистрация</router-link>
-          <Button text='Войти' />
+          <Button text='Войти' type='primary' />
         </div>
       </form>
     </div>
@@ -29,8 +31,10 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import Page from '@/components/Page';
+import Alert from '@/components/Alert';
 import Input from '@/components/Form/Input';
 import Button from '@/components/Form/Button';
+import { ALERT_TYPES } from './config';
 
 const {
   mapActions,
@@ -41,11 +45,13 @@ export default {
   name: 'Login',
   components: {
     Page,
+    Alert,
     Input,
     Button,
   },
   data() {
     return {
+      ALERT_TYPES,
       cardNumber: '',
       password: '',
     };
@@ -77,16 +83,37 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '../../assets/styles/palette';
+
+  .form {
+    width: 300px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    &:focus-within .control-label {
+      color: $light-blue;
+      opacity: 1;
+    }
+  }
+
+  .form-group.summary {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .control-label {
+    color: $gray;
+    opacity: .5;
+    margin-bottom: 5px;
+  }
+
   .status {
     margin-bottom: 10px;
-  }
-
-  .status.error {
-    color: red;
-  }
-
-  .status.loading {
-    color: blue;
   }
 </style>

@@ -22,7 +22,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '../../assets/styles/palette';
+
   button {
     padding: 6px 12px;
     outline: 0;
@@ -32,37 +34,67 @@ export default {
     border: 1px solid transparent;
     border-radius: 2px;
     text-transform: uppercase;
-    color: #fff;
+    color: $white;
   }
 
   .default {
-    color: #6c7177;
-    background-color: #fff;
-    border-color: #eceff1;
-  }
+    color: $gray;
+    background-color: $default-light;
+    border-color: $default-border-light;
 
-  .default:hover, .default:focus {
-    background-color: #f5f5f5;
-    border-color: #e0e5e8;
-  }
+    &:hover, &:focus {
+      background-color: $default;
+      border-color: $default-border;
+    }
 
-  .default:active {
-    background-color: #ebebeb;
-    border-color: #e9edef;
+    &:active {
+      background-color: $default-dark;
+      border-color: $default-border-dark;
+    }
   }
 
   .primary {
-    background-color: #448aff;
-    border-color: #448aff;
+    background-color: $primary-light;
+    border-color: $primary-light;
+
+    &:hover, &:focus {
+      background-color: $primary;
+      border-color: $primary;
+    }
+
+    &:active {
+      background-color: $primary-dark;
+      border-color: $primary-dark;
+    }
   }
 
-  .primary:hover, .primary:focus {
-    background-color: #307dff;
-    border-color: #307dff;
+  .success {
+    background-color: $success-light;
+    border-color: $success-light;
+
+    &:hover, &:focus {
+      background-color: $success;
+      border-color: $success;
+    }
+
+    &:active {
+      background-color: $success-dark;
+      border-color: $success-dark;
+    }
   }
 
-  .primary:active {
-    background-color: #1b70ff;
-    border-color: #3f87ff;
+  .danger {
+    background-color: $danger-light;
+    border-color: $danger-light;
+
+    &:hover, &:focus {
+      background-color: $danger;
+      border-color: $danger;
+    }
+
+    &:active {
+      background-color: $danger-dark;
+      border-color: $danger-dark;
+    }
   }
 </style>
