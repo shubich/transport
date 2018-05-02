@@ -4,6 +4,7 @@ import store from '@/store';
 import Home from '@/pages/Home';
 import Routes from '@/pages/Routes';
 import Profile from '@/pages/Profile';
+import Admin from '@/pages/Admin';
 import Login from '@/pages/Login';
 import Reg from '@/pages/Reg';
 
@@ -27,6 +28,12 @@ const router = new Router({
       path: '/profile',
       name: 'Profile',
       component: Profile,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: Admin,
       meta: { requiresAuth: true },
     },
     {
