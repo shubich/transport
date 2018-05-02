@@ -29,7 +29,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-import Page from '@/components/Page';
+import Page from '@/components/Page/Page';
 import Alert from '@/components/Alert';
 import Input from '@/components/Form/Input';
 import Button from '@/components/Form/Button';

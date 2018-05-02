@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from '@/store';
 import Home from '@/pages/Home';
+import Routes from '@/pages/Routes';
+import Profile from '@/pages/Profile';
 import Login from '@/pages/Login';
 import Reg from '@/pages/Reg';
 
@@ -13,6 +15,18 @@ const router = new Router({
       path: '/',
       name: 'Home',
       component: Home,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/routes',
+      name: 'Routes',
+      component: Routes,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
       meta: { requiresAuth: true },
     },
     {
