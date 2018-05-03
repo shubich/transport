@@ -37,7 +37,7 @@ export default class User {
   }
 
   static authentication(token) {
-    const { uid } = this.decodeToken(token);
+    const uid = token ? this.decodeToken(token).uid : null;
 
     return this.getUserByid(uid)
       .then((user) => {
