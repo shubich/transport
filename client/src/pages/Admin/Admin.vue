@@ -1,20 +1,18 @@
 <template>
   <Page desktop>
     <div class="container">
-      <CityRoutes />
+      <router-view></router-view>
     </div>
   </Page>
 </template>
 
 <script>
 import Page from '@/components/Page/Page';
-import CityRoutes from './subComponents/CityRoutes';
 
 export default {
   name: 'Routes',
   components: {
     Page,
-    CityRoutes,
   },
 };
 </script>

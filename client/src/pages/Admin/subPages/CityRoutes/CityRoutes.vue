@@ -1,7 +1,9 @@
 <template>
   <div class="wrapper">
     <div class="control">
-      <Button type="primary" text="Добавить маршрут" />
+      <router-link :to="{ path: 'add-route'}" append>
+        <Button type="primary" text="Добавить маршрут" />
+      </router-link>
       <div class="date-range">
         <Datepicker />
         &#8211;

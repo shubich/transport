@@ -5,6 +5,8 @@ import Home from '@/pages/Home';
 import Routes from '@/pages/Routes';
 import Profile from '@/pages/Profile';
 import Admin from '@/pages/Admin';
+import CityRoutes from '@/pages/Admin/subPages/CityRoutes';
+import AddRoute from '@/pages/Admin/subPages/AddRoute';
 import Login from '@/pages/Login';
 import Reg from '@/pages/Reg';
 
@@ -32,9 +34,18 @@ const router = new Router({
     },
     {
       path: '/admin',
-      name: 'Admin',
       component: Admin,
       meta: { requiresAuth: true },
+      children: [
+        {
+          path: '',
+          component: CityRoutes,
+        },
+        {
+          path: 'add-route',
+          component: AddRoute,
+        },
+      ],
     },
     {
       path: '/login',

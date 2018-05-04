@@ -1,9 +1,9 @@
 import mongoose from '../../mongo';
 
 const RouteSchema = new mongoose.Schema({
-  name: {
+  number: {
     type: String,
-    unique: true, // Bus-6, Trolleybus-5...
+    // unique: manual check
     required: true,
   },
   vehicleType: {
