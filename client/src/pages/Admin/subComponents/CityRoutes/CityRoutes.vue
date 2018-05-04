@@ -1,5 +1,31 @@
 <template>
   <div class="wrapper">
+    <div class="control">
+      <Button type="primary" text="Добавить маршрут" />
+      <div class="date-range">
+        <Datepicker />
+        &#8211;
+        <Datepicker />
+      </div>
+      <Checkbox
+        type="primary"
+        label="Автобусы"
+        :checked="showBuses"
+        @click="showBuses=!showBuses"
+      />
+      <Checkbox
+        type="primary"
+        label="Троллейбусы"
+        :checked="showTrolleybuses"
+        @click="showTrolleybuses=!showTrolleybuses"
+      />
+      <Checkbox
+        label="Трамваи"
+        type="danger"
+        checked
+        disabled
+      />
+    </div>
     <div class="table">
       <header class="header row">
         <div class="column">
@@ -32,42 +58,39 @@
       </header>
       <div></div>
     </div>
-    <div class="control">
-      <label>
-        <span>С</span>
-        <input type="date">
-      </label>
-      <label>
-        <span>По</span>
-        <input type="date">
-      </label>
-      <label>
-        <input type="checkbox">
-        <span>Автобусы</span>
-      </label>
-      <label>
-        <input type="checkbox">
-        <span>Троллейбусы</span>
-      </label>
-      <label>
-        <input type="checkbox">
-        <span>Трамваи</span>
-      </label>
-    </div>
   </div>
 </template>
 
 <script>
+import Datepicker from '@/components/Form/Datepicker';
+import Button from '@/components/Form/Button';
+import Checkbox from '@/components/Form/Checkbox';
+
 export default {
   name: 'CityRoutes',
+  components: {
+    Datepicker,
+    Button,
+    Checkbox,
+  },
+  data() {
+    return {
+      showBuses: true,
+      showTrolleybuses: true,
+    };
+  },
 };
 </script>
 
 <style lang="scss" scoped>
   @import '../../../../assets/styles/palette';
 
+  $space-between: 15px;
+
   .wrapper {
     display: flex;
+    flex-direction: column;
+    padding: $space-between;
   }
 
   .table {
@@ -77,10 +100,19 @@ export default {
   .control {
     flex: 1;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $space-between;
 
     label {
       padding: 5px;
+    }
+
+    .date-range {
+      flex-basis: 550px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 
