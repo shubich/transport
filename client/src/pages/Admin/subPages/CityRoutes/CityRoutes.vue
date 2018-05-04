@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="control">
-      <router-link :to="{ path: 'add-route'}" append>
+      <router-link to="add-route" append>
         <Button type="primary" text="Добавить маршрут" />
       </router-link>
       <div class="date-range">
