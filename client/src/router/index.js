@@ -9,6 +9,7 @@ import CityRoutes from '@/pages/Admin/subPages/CityRoutes';
 import AddRoute from '@/pages/Admin/subPages/AddRoute';
 import Login from '@/pages/Login';
 import Reg from '@/pages/Reg';
+import Logout from '@/pages/Logout';
 
 Vue.use(Router);
 
@@ -48,16 +49,22 @@ const router = new Router({
       ],
     },
     {
+      path: '/reg',
+      name: 'Reg',
+      component: Reg,
+      meta: { requiresNotAuth: true },
+    },
+    {
       path: '/login',
       name: 'Login',
       component: Login,
       meta: { requiresNotAuth: true },
     },
     {
-      path: '/reg',
-      name: 'Reg',
-      component: Reg,
-      meta: { requiresNotAuth: true },
+      path: '/logout',
+      name: 'Logout',
+      component: Logout,
+      meta: { requiresAuth: true },
     },
   ],
 });
