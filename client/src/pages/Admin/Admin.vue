@@ -2,7 +2,9 @@
   <Page desktop>
     <div class="container">
       <Nav/>
-      <router-view></router-view>
+      <div class="content">
+        <router-view></router-view>
+      </div>
     </div>
   </Page>
 </template>
@@ -21,5 +23,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .content {
+    padding: 15px;
+  }
 </style>

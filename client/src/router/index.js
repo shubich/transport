@@ -7,6 +7,7 @@ import Profile from '@/pages/Profile';
 import Admin from '@/pages/Admin';
 import CityRoutes from '@/pages/Admin/subPages/CityRoutes';
 import AddRoute from '@/pages/Admin/subPages/AddRoute';
+import Stops from '@/pages/Admin/subPages/Stops';
 import Login from '@/pages/Login';
 import Reg from '@/pages/Reg';
 import Logout from '@/pages/Logout';
@@ -45,6 +46,10 @@ const router = new Router({
         {
           path: 'add-route',
           component: AddRoute,
+        },
+        {
+          path: 'stops',
+          component: Stops,
         },
       ],
     },

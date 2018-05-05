@@ -1,6 +1,6 @@
 import mongoose from '../../mongo';
 
-const rideSchema = new mongoose.Schema({
+const RideSchema = new mongoose.Schema({
   user: {
     type: Object,
     required: true,
@@ -19,4 +19,4 @@ const rideSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model('Ride', rideSchema);
+export default mongoose.model('Ride', RideSchema);

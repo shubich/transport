@@ -6,6 +6,7 @@ const SALT_WORK_FACTOR = 10;
 const UserSchema = new mongoose.Schema({
   cardNumber: {
     type: String,
+    trim: true,
     unique: true,
     required: true,
   },

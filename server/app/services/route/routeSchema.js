@@ -3,6 +3,7 @@ import mongoose from '../../mongo';
 const RouteSchema = new mongoose.Schema({
   number: {
     type: String,
+    trim: true,
     // unique: manual check
     required: true,
   },

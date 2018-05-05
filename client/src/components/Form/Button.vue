@@ -83,6 +83,21 @@ export default {
     }
   }
 
+  .warning {
+    background-color: $warning-light;
+    border-color: $warning-light;
+
+    &:hover, &:focus {
+      background-color: $warning;
+      border-color: $warning;
+    }
+
+    &:active {
+      background-color: $warning-dark;
+      border-color: $warning-dark;
+    }
+  }
+
   .danger {
     background-color: $danger-light;
     border-color: $danger-light;

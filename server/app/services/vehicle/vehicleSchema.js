@@ -1,10 +1,11 @@
 import mongoose from '../../mongo';
 
-const vehicleSchema = new mongoose.Schema({
+const VehicleSchema = new mongoose.Schema({
   number: {
     type: String,
     minlength: 8,
     maxlength: 8,
+    trim: true,
     unique: true,
     required: true,
   },
@@ -14,4 +15,4 @@ const vehicleSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model('Vehicle', vehicleSchema);
+export default mongoose.model('Vehicle', VehicleSchema);

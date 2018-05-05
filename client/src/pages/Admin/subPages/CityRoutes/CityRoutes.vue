@@ -87,12 +87,9 @@ export default {
 <style lang="scss" scoped>
   @import '../../../../assets/styles/palette';
 
-  $space-between: 15px;
-
   .wrapper {
     display: flex;
     flex-direction: column;
-    padding: $space-between;
   }
 
   .table {
@@ -104,7 +101,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: $space-between;
+    margin-bottom: 15px;
 
     label {
       padding: 5px;
