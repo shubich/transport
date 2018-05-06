@@ -1,6 +1,7 @@
 <template>
   <button
     :class="type"
+    @click="$emit('click', $event)"
   >
     {{text}}
   </button>

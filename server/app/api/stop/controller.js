@@ -14,6 +14,27 @@ export function addStop(req, res) {
     .catch(() => res.status(403).send('Server error'));
 }
 
+export function editStop(req, res) {
+  StopService.editStop(req.body)
+    .then((stop) => {
+      if (!stop) {
+        res.status(403).send('Error');
+      } else {
+        res.status(200).send('Success');
+      }
+    })
+    .catch(() => res.status(403).send('Server error'));
+}
+
+
+export function deleteStop(req, res) {
+  const { name } = req.body;
+
+  StopService.deleteStop(name)
+    .then(() => res.status(200).send('Success'))
+    .catch(() => res.status(403).send('Server error'));
+}
+
 export function getAllStops(req, res) {
   StopService.getAllStops()
     .then((stops) => {

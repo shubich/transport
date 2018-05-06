@@ -8,11 +8,11 @@
         :text="addStopResponse.data"
       />
       <form
-        @submit.prevent="onSubmit"
+        @submit.prevent="addStop"
         class="form"
       >
         <span>Название</span>
-        <Input type='text' v-model.trim="stopName"/>
+        <Input type="text" v-model.trim="newStopName"/>
         <Button
           type="primary"
           text="Добавить"
@@ -21,18 +21,32 @@
     </div>
     <div class="table">
       <div
+        v-for="(item, index) in stops"
         class="row"
-        v-for="item in stops"
+        :class="{active: isActive(index)}"
         :key="item.name"
       >
-        <div class="column">
-          {{item.name}}
+        <div class="column content">
+          <Input
+            v-if="isActive(index)"
+            class="editor"
+            type="text"
+            v-model="updStopName"
+            @keydown.enter="updateStop(item)"
+          />
+          <div
+            v-else
+            class="data"
+          >
+            {{item.name}}
+          </div>
         </div>
-        <div class="column manage">
-          <Button type="warning" text="Изменить"/>
+        <div v-if="isActive(index)" class="column manage">
+          <Button class="save" type="success" text="Сохранить" @click="updateStop(item)"/>
         </div>
-        <div class="column manage">
-          <Button type="danger" text="Удалить"/>
+        <div v-else class="column manage">
+          <Button class="edit" type="warning" text="Изменить" @click="setActive(index)"/>
+          <Button class="delete" type="danger" text="Удалить" @click="removeStop(item.name)"/>
         </div>
       </div>
     </div>
@@ -56,21 +70,43 @@ export default {
   data() {
     return {
       ALERT_TYPES,
-      stopName: '',
+      newStopName: '',
+      updStopName: '',
       stops: null,
       addStopResponse: null,
+      editIndex: null,
     };
   },
   mounted() {
-    axios.get('http://localhost:2000/stop/all')
-      .then((response) => { this.stops = response.data; })
-      .catch((err) => { this.addStopResponse = err.response; });
+    this.getStops();
   },
   methods: {
-    onSubmit() {
-      axios.post('http://localhost:2000/stop/', { name: this.stopName })
-        .then((response) => { this.addStopResponse = response; })
-        .catch((err) => { this.addStopResponse = err.response; });
+    getStops() {
+      axios.get('http://localhost:2000/stop/all')
+        .then((response) => { this.stops = response.data; });
+    },
+    addStop() {
+      axios.post('http://localhost:2000/stop/', { name: this.newStopName })
+        .then(() => {
+          this.getStops();
+          this.newStopName = '';
+        });
+    },
+    updateStop(item) {
+      this.editIndex = null;
+      axios.put('http://localhost:2000/stop/', { ...item, name: this.updStopName })
+        .then(() => { this.getStops(); });
+    },
+    removeStop(name) {
+      axios.delete('http://localhost:2000/stop/', { data: { name } })
+        .then(() => { this.getStops(); });
+    },
+    setActive(index) {
+      this.editIndex = index;
+      this.updStopName = this.stops[index].name;
+    },
+    isActive(index) {
+      return this.editIndex === index;
     },
   },
 };
@@ -88,25 +124,51 @@ export default {
       align-items: center;
       border: 1px solid $default-dark;
 
+      &.active {
+        background: $default-dark;
+      }
+
       &:not(:last-child) {
         border-bottom: none;
       }
 
       &:hover {
         background: $default;
-        .manage {
+        .edit, .delete {
           opacity: 1;
         }
       }
     }
 
     .column {
-      padding: 5px;
       flex: 1;
+      padding: 5px 0 5px 5px;
+
+      &:last-child {
+        padding-right: 5px;
+      }
+    }
+
+    .content {
+      display: flex;
+
+      .editor {
+        flex: 1;
+        padding: 8px;
+      }
     }
 
     .manage {
-      opacity: 0;
+      flex: 0;
+      display: flex;
+
+      .edit, .delete {
+        opacity: 0;
+      }
+
+      .edit {
+        margin-right: 5px;
+      }
     }
   }
 

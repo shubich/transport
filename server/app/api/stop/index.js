@@ -1,10 +1,14 @@
 import { Router } from 'express';
 
-import { addStop, getAllStops } from './controller';
+import * as actions from './controller';
 
 const router = new Router();
 
-router.post('/', addStop);
-router.get('/all', getAllStops);
+router.route('/')
+  .post(actions.addStop)
+  .put(actions.editStop)
+  .delete(actions.deleteStop);
+
+router.get('/all', actions.getAllStops);
 
 export default router;

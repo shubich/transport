@@ -14,6 +14,18 @@ export default class Stop {
       });
   }
 
+  static editStop(data) {
+    const { _id } = data;
+
+    return StopSchema.findOneAndUpdate({ _id }, data, { new: true })
+      .then(stop => (stop || null))
+      .catch(() => null);
+  }
+
+  static deleteStop(name) {
+    return StopSchema.findOneAndRemove({ name });
+  }
+
   static getAllStops() {
     return StopSchema.find();
   }
