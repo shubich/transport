@@ -1,18 +1,15 @@
 <template>
   <div class="wrapper">
     <div class="control">
-      <Alert
-        v-if="addStopResponse"
-        class="status"
-        :type="ALERT_TYPES[addStopResponse.status]"
-        :text="addStopResponse.data"
-      />
       <form
         @submit.prevent="addStop"
         class="form"
       >
         <span>Название</span>
-        <Input type="text" v-model.trim="newStopName"/>
+        <Input
+          class="input"
+          type="text"
+          v-model.trim="newStopName"/>
         <Button
           type="primary"
           text="Добавить"
@@ -55,21 +52,17 @@
 
 <script>
 import axios from 'axios';
-import Alert from '@/components/Alert';
 import Button from '@/components/Form/Button';
 import Input from '@/components/Form/Input';
-import { ALERT_TYPES } from './config';
 
 export default {
   name: 'Stops',
   components: {
-    Alert,
     Input,
     Button,
   },
   data() {
     return {
-      ALERT_TYPES,
       newStopName: '',
       updStopName: '',
       stops: null,
@@ -114,6 +107,16 @@ export default {
 
 <style lang="scss" scoped>
   @import '../../../../assets/styles/palette';
+
+  .form {
+    display: flex;
+    align-items: center;
+
+    .input {
+      flex: 1;
+      margin: 0 5px;
+    }
+  }
 
   .table {
     margin-top: 15px;

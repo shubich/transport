@@ -5,9 +5,9 @@
         <Button type="primary" text="Добавить маршрут" />
       </router-link>
       <div class="date-range">
-        <Datepicker />
+        <Datepicker :date="startDate"/>
         &#8211;
-        <Datepicker />
+        <Datepicker :date="endDate"/>
       </div>
       <Checkbox
         type="primary"
@@ -58,7 +58,20 @@
           </div>
         </div>
       </header>
-      <div></div>
+      <div class="body">
+        <div
+          v-for="item in visibleRoutes"
+          :key="item.number+item.type"
+          class="row"
+        >
+          <div class="column target">{{item.number}}</div>
+          <div class="column target">{{item.description}}</div>
+          <div class="column target">{{item.type}}</div>
+          <div class="column target">{{item.count}}</div>
+          <div class="column target">{{item.passengers}}</div>
+          <div class="column target">{{item.profit}}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -67,6 +80,7 @@
 import Datepicker from '@/components/Form/Datepicker';
 import Button from '@/components/Form/Button';
 import Checkbox from '@/components/Form/Checkbox';
+import { ROUTES } from './constants';
 
 export default {
   name: 'CityRoutes',
@@ -77,9 +91,26 @@ export default {
   },
   data() {
     return {
+      ROUTES,
       showBuses: true,
       showTrolleybuses: true,
     };
+  },
+  computed: {
+    visibleRoutes() {
+      return ROUTES.filter((item) => {
+        if (item.type === 'Автобус' && this.showBuses) return item;
+        if (item.type === 'Троллейбус' && this.showTrolleybuses) return item;
+        return false;
+      });
+    },
+    startDate() {
+      const now = new Date();
+      return new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+    },
+    endDate() {
+      return new Date();
+    },
   },
 };
 </script>
@@ -139,6 +170,14 @@ export default {
         background: $default;
         cursor: pointer;
       }
+    }
+  }
+
+  .body {
+    border-left: 1px solid $default-dark;
+
+    .target {
+      border-color: $default-dark;
     }
   }
 
