@@ -151,9 +151,9 @@ export default {
     justify-content: space-around;
 
     &.header {
-      background: $default-light;
-      border-top: 1px solid $blue;
-      border-left: 1px solid $blue;
+      background: $default;
+      border-top: 1px solid $default-dark;
+      border-left: 1px solid $default-dark;
     }
   }
 
@@ -163,8 +163,8 @@ export default {
     &.target {
       padding: 5px;
       text-align: center;
-      border-bottom: 1px solid $blue;
-      border-right: 1px solid $blue;
+      border-bottom: 1px solid $default-dark;
+      border-right: 1px solid $default-dark;
 
       &:hover {
         background: $default;

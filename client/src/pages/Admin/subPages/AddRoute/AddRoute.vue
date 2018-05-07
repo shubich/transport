@@ -3,11 +3,11 @@
     <div class="left">
       <label class="row">
         <span>Номер</span>
-        <Input type='text'/>
+        <Input type='text' class="stretch"/>
       </label>
       <label class="row">
         <span>Транспорт</span>
-        <select>
+        <select class="stretch">
           <option
             v-for="item in vehicleTypes"
             :value="item"
@@ -16,10 +16,6 @@
             {{item}}
           </option>
         </select>
-      </label>
-      <label class="row">
-        <span>Остановки</span>
-        <Input type='text'/>
       </label>
       <div class="row">
         <Button
@@ -30,7 +26,14 @@
       </div>
     </div>
     <div class="center">
-
+      <div class="row control">
+        <span>Остановки</span>
+        <Input type='text' class="stretch"/>
+        <Button
+          type="primary"
+          text="Добавить"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -63,33 +66,39 @@ export default {
     display: flex;
   }
 
+  .row {
+    display: flex;
+    align-items: center;
+
+    .stretch {
+      flex: 1;
+    }
+  }
+
   .left {
     flex: 1;
     display: flex;
     flex-direction: column;
+
+    .row {
+      input, select {
+        margin-left: 5px;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
   }
 
   .center {
     flex: 3;
     margin-left: 15px;
-    background: $default;
-  }
 
-  .row {
-    display: flex;
-    align-items: center;
-
-    input, select {
-      flex: 1;
-      margin-left: 5px;
-    }
-
-    .stretch {
-      flex: 1;
-    }
-
-    &:not(:last-child) {
-      margin-bottom: 15px;
+    .control {
+      input, button {
+        margin-left: 5px;
+      }
     }
   }
 </style>
