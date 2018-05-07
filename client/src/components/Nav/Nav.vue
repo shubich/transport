@@ -35,6 +35,7 @@ export default {
     padding: 15px 0;
     flex: 1 1 100%;
     text-align: center;
+    background: $white;
     color: $black;
 
     &:hover, &:focus {
