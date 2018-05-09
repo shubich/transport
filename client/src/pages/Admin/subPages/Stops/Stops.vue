@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="control">
       <form
-        @submit.prevent="addStop"
+        @submit.prevent="onSubmit"
         class="form"
       >
         <span>Название</span>
@@ -51,9 +51,14 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { createNamespacedHelpers } from 'vuex';
 import Button from '@/components/Form/Button';
 import Input from '@/components/Form/Input';
+
+const {
+  mapState,
+  mapActions,
+} = createNamespacedHelpers('stops');
 
 export default {
   name: 'Stops',
@@ -61,12 +66,15 @@ export default {
     Input,
     Button,
   },
+  computed: {
+    ...mapState([
+      'stops',
+    ]),
+  },
   data() {
     return {
       newStopName: '',
       updStopName: '',
-      stops: null,
-      addStopResponse: null,
       editIndex: null,
     };
   },
@@ -74,25 +82,22 @@ export default {
     this.getStops();
   },
   methods: {
-    getStops() {
-      axios.get('http://localhost:2000/stop/all')
-        .then((response) => { this.stops = response.data; });
-    },
-    addStop() {
-      axios.post('http://localhost:2000/stop/', { name: this.newStopName })
-        .then(() => {
-          this.getStops();
-          this.newStopName = '';
-        });
+    ...mapActions([
+      'getStops',
+      'addStop',
+      'editStop',
+      'deleteStop',
+    ]),
+    onSubmit() {
+      this.addStop({ name: this.newStopName });
+      this.newStopName = '';
     },
     updateStop(item) {
+      this.editStop({ ...item, name: this.updStopName });
       this.editIndex = null;
-      axios.put('http://localhost:2000/stop/', { ...item, name: this.updStopName })
-        .then(() => { this.getStops(); });
     },
     removeStop(name) {
-      axios.delete('http://localhost:2000/stop/', { data: { name } })
-        .then(() => { this.getStops(); });
+      this.deleteStop(name);
     },
     setActive(index) {
       this.editIndex = index;

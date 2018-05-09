@@ -62,4 +62,15 @@ export default {
       }
     }
   }
+
+  .autocomplete__results {
+    .autocomplete__results__item {
+      &:hover {
+        background: $default;
+      }
+      &.autocomplete__selected {
+        background: $default-dark;
+      }
+    }
+  }
 </style>

@@ -44,11 +44,16 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { createNamespacedHelpers } from 'vuex';
 import Autocomplete from '@/components/Form/Autocomplete';
 import Button from '@/components/Form/Button';
 import Input from '@/components/Form/Input';
 import Checkbox from '@/components/Form/Checkbox';
+
+const {
+  mapState,
+  mapActions,
+} = createNamespacedHelpers('stops');
 
 export default {
   name: 'AddRoute',
@@ -58,17 +63,20 @@ export default {
     Button,
     Checkbox,
   },
+  computed: {
+    ...mapState([
+      'stops',
+    ]),
+  },
   data() {
     return {
       vehicleTypes: ['Автобус', 'Троллейбус'],
-      stops: [],
     };
   },
   methods: {
-    getStops() {
-      axios.get('http://localhost:2000/stop/all')
-        .then((response) => { this.stops = response.data; });
-    },
+    ...mapActions([
+      'getStops',
+    ]),
   },
   mounted() {
     this.getStops();
