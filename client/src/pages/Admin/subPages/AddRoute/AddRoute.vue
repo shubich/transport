@@ -26,18 +26,28 @@
       </div>
     </div>
     <div class="center">
-      <div class="row control">
+      <div class="row control margin-bottom">
         <span>Остановки</span>
         <autocomplete
           class="margin-left stretch"
           resultsValue="_id"
           resultsDisplay="name"
-          :source="stops"
+          :source="availableStops"
+          @select="onStopSelect"
         />
         <Button
           type="primary"
           text="Добавить"
         />
+      </div>
+      <div class="selected-stops">
+        <div
+          class="row"
+          v-for="item in selectedStops"
+          :key="item._id"
+        >
+          {{item.name}}
+        </div>
       </div>
     </div>
   </div>
@@ -67,16 +77,26 @@ export default {
     ...mapState([
       'stops',
     ]),
+    availableStops() {
+      return this.stops.filter((item) => {
+        if (this.selectedStops.includes(item)) return false;
+        return true;
+      });
+    },
   },
   data() {
     return {
       vehicleTypes: ['Автобус', 'Троллейбус'],
+      selectedStops: [],
     };
   },
   methods: {
     ...mapActions([
       'getStops',
     ]),
+    onStopSelect(stop) {
+      this.selectedStops.push(stop);
+    },
   },
   mounted() {
     this.getStops();
@@ -90,6 +110,10 @@ export default {
 
   .margin-left {
     margin-left: 5px;
+  }
+
+  .margin-bottom {
+    margin-bottom: 15px;
   }
 
   .wrapper {
@@ -129,6 +153,14 @@ export default {
       input, button {
         margin-left: 5px;
       }
+    }
+
+    .selected-stops .row {
+      border: 1px solid $default;
+      &:not(:last-child) {
+        border-bottom: none;
+      }
+      padding: 6px 12px;
     }
   }
 </style>

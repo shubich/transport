@@ -29,8 +29,8 @@ export default {
     };
   },
   methods: {
-    onSelect(value) {
-      this.$emit('select', value);
+    onSelect(item) {
+      this.$emit('select', item.selectedObject);
       // access the autocomplete component methods from the parent
       this.$refs.autocomplete.clearValues();
     },
