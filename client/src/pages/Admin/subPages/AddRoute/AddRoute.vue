@@ -28,7 +28,12 @@
     <div class="center">
       <div class="row control">
         <span>Остановки</span>
-        <Input type='text' class="stretch"/>
+        <autocomplete
+          class="margin-left stretch"
+          resultsValue="_id"
+          resultsDisplay="name"
+          :source="stops"
+        />
         <Button
           type="primary"
           text="Добавить"
@@ -39,6 +44,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+import Autocomplete from '@/components/Form/Autocomplete';
 import Button from '@/components/Form/Button';
 import Input from '@/components/Form/Input';
 import Checkbox from '@/components/Form/Checkbox';
@@ -46,6 +53,7 @@ import Checkbox from '@/components/Form/Checkbox';
 export default {
   name: 'AddRoute',
   components: {
+    Autocomplete,
     Input,
     Button,
     Checkbox,
@@ -53,14 +61,28 @@ export default {
   data() {
     return {
       vehicleTypes: ['Автобус', 'Троллейбус'],
-      busStops: ['Восточный микрорайон', 'Детский городок', 'Парк Воинов-интернационалистов'],
+      stops: [],
     };
+  },
+  methods: {
+    getStops() {
+      axios.get('http://localhost:2000/stop/all')
+        .then((response) => { this.stops = response.data; });
+    },
+  },
+  mounted() {
+    this.getStops();
   },
 };
 </script>
 
 <style lang="scss" scoped>
   @import '../../../../assets/styles/palette';
+  @import '../../../../assets/styles/mixins';
+
+  .margin-left {
+    margin-left: 5px;
+  }
 
   .wrapper {
     display: flex;
