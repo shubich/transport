@@ -43,10 +43,32 @@
       <div class="selected-stops">
         <div
           class="row"
-          v-for="item in selectedStops"
+          v-for="(item, index) in selectedStops"
           :key="item._id"
         >
-          {{item.name}}
+          <div class="label">
+            {{item.name}}
+          </div>
+          <div class="manage">
+            <div @click="stopToUp(index)">
+              <awesome-icon
+                name="arrow-up"
+                class="icon up"
+              />
+            </div>
+            <div @click="stopToDown(index)">
+              <awesome-icon
+                name="arrow-down"
+                class="icon down"
+              />
+            </div>
+            <div @click="removeStop(index)">
+              <awesome-icon
+                name="times"
+                class="icon remove"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -54,6 +76,10 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/times';
+import 'vue-awesome/icons/arrow-up';
+import 'vue-awesome/icons/arrow-down';
+import AwesomeIcon from 'vue-awesome/components/Icon';
 import { createNamespacedHelpers } from 'vuex';
 import Autocomplete from '@/components/Form/Autocomplete';
 import Button from '@/components/Form/Button';
@@ -68,6 +94,7 @@ const {
 export default {
   name: 'AddRoute',
   components: {
+    AwesomeIcon,
     Autocomplete,
     Input,
     Button,
@@ -96,6 +123,21 @@ export default {
     ]),
     onStopSelect(stop) {
       this.selectedStops.push(stop);
+    },
+    stopToUp(index) {
+      if (index === 0) return;
+      const movingItem = this.selectedStops[index];
+      this.selectedStops.splice(index, 1);
+      this.selectedStops.splice(index - 1, 0, movingItem);
+    },
+    stopToDown(index) {
+      if (index === (this.selectedStops.length - 1)) return;
+      const movingItem = this.selectedStops[index];
+      this.selectedStops.splice(index, 1);
+      this.selectedStops.splice(index + 1, 0, movingItem);
+    },
+    removeStop(index) {
+      this.selectedStops.splice(index, 1);
     },
   },
   mounted() {
@@ -156,11 +198,40 @@ export default {
     }
 
     .selected-stops .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 12px;
       border: 1px solid $default;
       &:not(:last-child) {
         border-bottom: none;
       }
-      padding: 6px 12px;
+
+      &:hover {
+        background: $default;
+      }
+
+      .label {
+        flex: 11;
+      }
+
+      .manage {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .icon {
+        opacity: 0;
+        color: $gray;
+        &.remove:hover { color: $red; }
+        &.up:hover, &.down:hover { color: $blue; }
+      }
+
+      &:hover {
+        .icon {
+          opacity: 1;
+        }
+      }
     }
   }
 </style>
