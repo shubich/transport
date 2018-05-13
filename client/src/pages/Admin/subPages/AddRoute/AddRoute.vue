@@ -3,13 +3,13 @@
     <div class="left">
       <label class="row">
         <span>Номер</span>
-        <Input type='text' class="stretch"/>
+        <Input type='text' class="stretch" v-model="routeNumber"/>
       </label>
       <label class="row">
         <span>Транспорт</span>
-        <select class="stretch">
+        <select class="stretch" v-model="vehicleType">
           <option
-            v-for="item in vehicleTypes"
+            v-for="item in VEHICLE_TYPES"
             :value="item"
             :key="item"
           >
@@ -22,6 +22,7 @@
           type="success"
           text="Сохранить"
           class="stretch"
+          @click="save"
         />
       </div>
     </div>
@@ -85,11 +86,10 @@ import Autocomplete from '@/components/Form/Autocomplete';
 import Button from '@/components/Form/Button';
 import Input from '@/components/Form/Input';
 import Checkbox from '@/components/Form/Checkbox';
+import { VEHICLE_TYPES } from './constants';
 
-const {
-  mapState,
-  mapActions,
-} = createNamespacedHelpers('stops');
+const { mapState: mapStopState, mapActions: mapStopActions } = createNamespacedHelpers('stops');
+const { mapActions: mapRouteActions } = createNamespacedHelpers('routes');
 
 export default {
   name: 'AddRoute',
@@ -101,7 +101,7 @@ export default {
     Checkbox,
   },
   computed: {
-    ...mapState([
+    ...mapStopState([
       'stops',
     ]),
     availableStops() {
@@ -113,14 +113,23 @@ export default {
   },
   data() {
     return {
-      vehicleTypes: ['Автобус', 'Троллейбус'],
+      VEHICLE_TYPES,
+      routeNumber: '',
+      vehicleType: '',
       selectedStops: [],
     };
   },
   methods: {
-    ...mapActions([
-      'getStops',
-    ]),
+    ...mapStopActions(['getStops']),
+    ...mapRouteActions(['addRoute']),
+    save() {
+      this.addRoute({
+        number: this.routeNumber,
+        vehicleType: this.vehicleType,
+        /* eslint-disable-next-line */
+        stops: this.selectedStops.map(item => item._id),
+      });
+    },
     onStopSelect(stop) {
       this.selectedStops.push(stop);
     },

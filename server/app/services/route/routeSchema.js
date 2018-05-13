@@ -9,7 +9,7 @@ const RouteSchema = new mongoose.Schema({
   },
   vehicleType: {
     type: String,
-    enum: ['Bus', 'Trolleybus', 'Tram', 'Minibus'],
+    enum: ['Автобус', 'Троллейбус', 'Трамваи'],
     required: true,
   },
   stops: [String],
