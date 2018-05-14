@@ -10,5 +10,6 @@ router.route('/')
   .delete(actions.deleteRoute);
 
 router.get('/all', actions.getAllRoutes);
+router.get('/:id', actions.getRouteByid);
 
 export default router;

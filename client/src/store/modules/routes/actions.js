@@ -8,6 +8,12 @@ export default {
         commit(MUTATIONS.SET_ROUTES, response.data);
       });
   },
+  getRoute: ({ commit }, id) => {
+    api.routes.getRoute(id)
+      .then((response) => {
+        commit(MUTATIONS.SET_ROUTE, response.data);
+      });
+  },
   addRoute: (store, data) => {
     api.routes.addRoute(data);
   },

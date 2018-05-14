@@ -3,7 +3,7 @@
     <div class="left">
       <label class="row">
         <span>Номер</span>
-        <Input type='text' class="stretch" v-model="routeNumber"/>
+        <Input type='text' class="stretch" v-model="number"/>
       </label>
       <label class="row">
         <span>Транспорт</span>
@@ -89,7 +89,7 @@ import Checkbox from '@/components/Form/Checkbox';
 import { VEHICLE_TYPES } from './constants';
 
 const { mapState: mapStopState, mapActions: mapStopActions } = createNamespacedHelpers('stops');
-const { mapActions: mapRouteActions } = createNamespacedHelpers('routes');
+const { mapState: mapRouteState, mapActions: mapRouteActions } = createNamespacedHelpers('routes');
 
 export default {
   name: 'AddRoute',
@@ -101,34 +101,38 @@ export default {
     Checkbox,
   },
   computed: {
-    ...mapStopState([
-      'stops',
-    ]),
+    ...mapStopState(['stops']),
+    ...mapRouteState(['route']),
     availableStops() {
-      return this.stops.filter((item) => {
-        if (this.selectedStops.includes(item)) return false;
-        return true;
-      });
+      return this.stops.filter(item =>
+        !this.selectedStops.includes(item));
     },
   },
   data() {
     return {
       VEHICLE_TYPES,
-      routeNumber: '',
+      number: '',
       vehicleType: '',
       selectedStops: [],
+      editing: null,
     };
   },
   methods: {
+    /* eslint-disable no-underscore-dangle */
     ...mapStopActions(['getStops']),
-    ...mapRouteActions(['addRoute']),
+    ...mapRouteActions(['getRoute', 'addRoute', 'editRoute']),
     save() {
-      this.addRoute({
-        number: this.routeNumber,
+      const data = {
+        number: this.number,
         vehicleType: this.vehicleType,
-        /* eslint-disable-next-line */
         stops: this.selectedStops.map(item => item._id),
-      });
+      };
+
+      if (this.editing) {
+        this.editRoute({ _id: this.route, ...data });
+      } else {
+        this.addRoute(data);
+      }
     },
     onStopSelect(stop) {
       this.selectedStops.push(stop);
@@ -151,7 +155,20 @@ export default {
   },
   mounted() {
     this.getStops();
-    console.dir(this.$route.params);
+
+    this.editing = this.$route.params.id;
+
+    if (this.editing) {
+      this.getRoute(this.editing);
+    }
+  },
+  watch: {
+    route() {
+      this.number = this.route.number;
+      this.vehicleType = this.route.vehicleType;
+      this.selectedStops = this.stops.filter(item =>
+        this.route.stops.includes(item._id));
+    },
   },
 };
 </script>

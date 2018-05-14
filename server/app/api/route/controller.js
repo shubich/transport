@@ -47,3 +47,15 @@ export function getAllRoutes(req, res) {
     .catch(() => res.status(403).send('Server error'));
 }
 
+export function getRouteByid(req, res) {
+  RouteService.getRouteByid(req.params.id)
+    .then((route) => {
+      if (!route) {
+        res.status(403).send('Nothing');
+      } else {
+        res.status(200).send(route);
+      }
+    })
+    .catch(() => res.status(403).send('Server error'));
+}
+

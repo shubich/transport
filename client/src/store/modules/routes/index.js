@@ -4,6 +4,7 @@ import mutations from './mutations';
 
 export const initialState = () => ({
   routes: [],
+  route: {},
 });
 
 export default {

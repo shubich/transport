@@ -5,6 +5,9 @@ export default {
   getRoutes() {
     return axios.get(`${HOST}:${PORT}/route/all`);
   },
+  getRoute(id) {
+    return axios.get(`${HOST}:${PORT}/route/${id}`);
+  },
   addRoute(data) {
     return axios.post(`${HOST}:${PORT}/route`, data);
   },
