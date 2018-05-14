@@ -21,12 +21,6 @@
         :checked="showTrolleybuses"
         @click="showTrolleybuses=!showTrolleybuses"
       />
-      <Checkbox
-        label="Трамваи"
-        type="danger"
-        checked
-        disabled
-      />
     </div>
     <div class="table">
       <header class="header row">
@@ -57,6 +51,15 @@
             <div class="column target">Прибыль</div>
           </div>
         </div>
+        <div class="column">
+          <div class="row">
+            <div class="column target">Управление</div>
+          </div>
+          <div class="row">
+            <div class="column target">Редактировать</div>
+            <div class="column target">Удалить</div>
+          </div>
+        </div>
       </header>
       <div class="body">
         <div
@@ -70,6 +73,17 @@
           <div class="column target">{{item.count}}</div>
           <div class="column target">{{item.passengers}}</div>
           <div class="column target">{{item.profit}}</div>
+          <div class="column target">
+            <router-link :to="'edit-route/'+item._id" append>
+              <awesome-icon name="edit" class="icon edit"/>
+            </router-link>
+          </div>
+          <div class="column target">
+            <awesome-icon
+              name="times"
+              class="icon delete"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -77,6 +91,9 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/edit';
+import 'vue-awesome/icons/times';
+import AwesomeIcon from 'vue-awesome/components/Icon';
 import { createNamespacedHelpers } from 'vuex';
 import Datepicker from '@/components/Form/Datepicker';
 import Button from '@/components/Form/Button';
@@ -87,6 +104,7 @@ const { mapState, mapActions } = createNamespacedHelpers('routes');
 export default {
   name: 'CityRoutes',
   components: {
+    AwesomeIcon,
     Datepicker,
     Button,
     Checkbox,
@@ -173,11 +191,6 @@ export default {
       text-align: center;
       border-bottom: 1px solid $default-dark;
       border-right: 1px solid $default-dark;
-
-      &:hover {
-        background: $default;
-        cursor: pointer;
-      }
     }
   }
 
@@ -186,6 +199,20 @@ export default {
 
     .target {
       border-color: $default-dark;
+    }
+  }
+
+  .icon {
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+
+    &.edit {
+      color: $warning;
+    }
+
+    &.delete {
+      color: $danger;
     }
   }
 
