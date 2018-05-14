@@ -1,4 +1,5 @@
 import RouteSchema from './routeSchema';
+import StopService from '../stop';
 
 export default class Route {
   static addRoute(number, vehicleType, stops) {
@@ -28,8 +29,19 @@ export default class Route {
     return RouteSchema.findOneAndRemove({ _id: id });
   }
 
-  static getAllRoutes() {
-    return RouteSchema.find();
+  static async getAllRoutes() {
+    const routes = await RouteSchema.find();
+    const fullRoutes = await Promise.all(routes.map(async (item) => {
+      const startStop = await StopService.getStopByid(item.stops[0]);
+      const endStop = await StopService.getStopByid(item.stops[item.stops.length - 1]);
+
+      return {
+        ...item._doc,
+        description: `${startStop.name} - ${endStop.name}`,
+      };
+    }));
+
+    return fullRoutes;
   }
 
   static getRouteByid(id) {

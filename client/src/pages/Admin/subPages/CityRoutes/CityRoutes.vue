@@ -66,7 +66,7 @@
         >
           <div class="column target">{{item.number}}</div>
           <div class="column target">{{item.description}}</div>
-          <div class="column target">{{item.type}}</div>
+          <div class="column target">{{item.vehicleType}}</div>
           <div class="column target">{{item.count}}</div>
           <div class="column target">{{item.passengers}}</div>
           <div class="column target">{{item.profit}}</div>
@@ -77,10 +77,12 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
 import Datepicker from '@/components/Form/Datepicker';
 import Button from '@/components/Form/Button';
 import Checkbox from '@/components/Form/Checkbox';
-import { ROUTES } from './constants';
+
+const { mapState, mapActions } = createNamespacedHelpers('routes');
 
 export default {
   name: 'CityRoutes',
@@ -91,16 +93,16 @@ export default {
   },
   data() {
     return {
-      ROUTES,
       showBuses: true,
       showTrolleybuses: true,
     };
   },
   computed: {
+    ...mapState(['routes']),
     visibleRoutes() {
-      return ROUTES.filter((item) => {
-        if (item.type === 'Автобус' && this.showBuses) return item;
-        if (item.type === 'Троллейбус' && this.showTrolleybuses) return item;
+      return this.routes.filter((item) => {
+        if (item.vehicleType === 'Автобус' && this.showBuses) return item;
+        if (item.vehicleType === 'Троллейбус' && this.showTrolleybuses) return item;
         return false;
       });
     },
@@ -111,6 +113,12 @@ export default {
     endDate() {
       return new Date();
     },
+  },
+  methods: {
+    ...mapActions(['getRoutes']),
+  },
+  mounted() {
+    this.getRoutes();
   },
 };
 </script>
