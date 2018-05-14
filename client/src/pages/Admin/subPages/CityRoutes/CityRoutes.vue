@@ -22,71 +22,54 @@
         @click="showTrolleybuses=!showTrolleybuses"
       />
     </div>
-    <div class="table">
-      <header class="header row">
-        <div class="column">
-          <div class="row">
-            <div class="column target">Маршрут</div>
-          </div>
-          <div class="row">
-            <div class="column target">№</div>
-            <div class="column target">Описание</div>
-          </div>
-        </div>
-        <div class="column">
-          <div class="row">
-            <div class="column target">Транспорт</div>
-          </div>
-          <div class="row">
-            <div class="column target">Тип</div>
-            <div class="column target">Количество</div>
-          </div>
-        </div>
-        <div class="column">
-          <div class="row">
-            <div class="column target">Статистика</div>
-          </div>
-          <div class="row">
-            <div class="column target">Пассажиры</div>
-            <div class="column target">Прибыль</div>
-          </div>
-        </div>
-        <div class="column">
-          <div class="row">
-            <div class="column target">Управление</div>
-          </div>
-          <div class="row">
-            <div class="column target">Редактировать</div>
-            <div class="column target">Удалить</div>
-          </div>
-        </div>
-      </header>
-      <div class="body">
-        <div
+    <table>
+      <thead>
+        <tr>
+          <th colspan="2">Маршрут</th>
+          <th colspan="2">Транспорт</th>
+          <th colspan="2">Статистика</th>
+          <th colspan="2" rowspan="2">Управление</th>
+        </tr>
+        <tr>
+          <th>№</th>
+          <th>Описание</th>
+          <th>Тип</th>
+          <th>Количество</th>
+          <th>Пассажиры</th>
+          <th>Прибыль</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td>Итого</td>
+          <td colspan="7">...</td>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr
           v-for="item in visibleRoutes"
           :key="item.number+item.type"
-          class="row"
         >
-          <div class="column target">{{item.number}}</div>
-          <div class="column target">{{item.description}}</div>
-          <div class="column target">{{item.vehicleType}}</div>
-          <div class="column target">{{item.count}}</div>
-          <div class="column target">{{item.passengers}}</div>
-          <div class="column target">{{item.profit}}</div>
-          <div class="column target">
+          <td>{{item.number}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.vehicleType}}</td>
+          <td>{{item.count}}</td>
+          <td>{{item.passengers}}</td>
+          <td>{{item.profit}}</td>
+          <td>
             <router-link :to="'edit-route/'+item._id" append>
               <awesome-icon name="edit" class="icon edit"/>
             </router-link>
-          </div>
-          <div class="column target">
+          </td>
+          <td>
             <awesome-icon
               name="times"
               class="icon delete"
             />
-          </div>
-        </div>
-      </div>
-    </div>
+          </td>
+        </tr>
+      </tbody>
+      </table>
   </div>
 </template>
 
@@ -149,10 +132,6 @@ export default {
     flex-direction: column;
   }
 
-  .table {
-    flex: 3;
-  }
-
   .control {
     flex: 1;
     display: flex;
@@ -172,36 +151,6 @@ export default {
     }
   }
 
-  .row {
-    display: flex;
-    justify-content: space-around;
-
-    &.header {
-      background: $default;
-      border-top: 1px solid $default-dark;
-      border-left: 1px solid $default-dark;
-    }
-  }
-
-  .column {
-    flex: 1;
-
-    &.target {
-      padding: 5px;
-      text-align: center;
-      border-bottom: 1px solid $default-dark;
-      border-right: 1px solid $default-dark;
-    }
-  }
-
-  .body {
-    border-left: 1px solid $default-dark;
-
-    .target {
-      border-color: $default-dark;
-    }
-  }
-
   .icon {
     cursor: pointer;
     width: 14px;
@@ -216,4 +165,21 @@ export default {
     }
   }
 
+  table {
+    border-collapse: collapse;
+  }
+
+  thead {
+    background: $default;
+  }
+
+  tbody {
+    text-align: center;
+  }
+
+  th, td {
+    border: 1px solid $default-dark;
+    font-weight: unset;
+    padding: 5px;
+  }
 </style>
