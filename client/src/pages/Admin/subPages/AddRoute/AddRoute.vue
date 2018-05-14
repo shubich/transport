@@ -151,6 +151,7 @@ export default {
   },
   mounted() {
     this.getStops();
+    console.dir(this.$route.params);
   },
 };
 </script>

@@ -49,6 +49,10 @@ const router = new Router({
           component: AddRoute,
         },
         {
+          path: 'edit-route/:id',
+          component: AddRoute,
+        },
+        {
           path: 'stops',
           component: Stops,
         },
