@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import auth from './modules/auth';
 import stops from './modules/stops';
 import routes from './modules/routes';
+import vehicles from './modules/vehicles';
 
 Vue.use(Vuex);
 
@@ -13,10 +14,14 @@ export default new Vuex.Store({
     auth,
     stops,
     routes,
+    vehicles,
   },
   actions: {
     reset({ commit }) {
       commit('auth/RESET');
+      commit('stops/RESET');
+      commit('routes/RESET');
+      commit('vehicles/RESET');
     },
   },
   strict: debug,

@@ -3,14 +3,14 @@ import mongoose from '../../mongo';
 const VehicleSchema = new mongoose.Schema({
   number: {
     type: String,
-    minlength: 8,
+    minlength: 4,
     maxlength: 8,
     trim: true,
     unique: true,
     required: true,
   },
   route: {
-    type: Object,
+    type: String,
     required: true,
   },
 });

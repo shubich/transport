@@ -3,7 +3,7 @@
     <div class="left">
       <label class="row">
         <span>Номер</span>
-        <Input type='text' class="stretch"/>
+        <Input type='text' class="stretch" v-model="newVehiclenumber"/>
       </label>
       <label class="row">
         <span>Тип ТС</span>
@@ -21,11 +21,11 @@
         <span>Маршрут</span>
         <select class="stretch" v-model="selectedRoute">
           <option
-            v-for="item in routes"
-            :value="item"
-            :key="item"
+            v-for="item in visibleRoutes"
+            :value="item._id"
+            :key="item._id"
           >
-            {{item}}
+            {{item.number}}
           </option>
         </select>
       </label>
@@ -34,6 +34,7 @@
           type="success"
           text="Зарегистрировать ТС"
           class="stretch"
+          @click="save"
         />
       </div>
     </div>
@@ -50,7 +51,7 @@
         <tbody>
           <tr
             v-for="(item) in vehicles"
-            :key="item.number"
+            :key="item._id"
           >
             <td>
               {{item.number}}
@@ -83,11 +84,21 @@
 <script>
 import 'vue-awesome/icons/edit';
 import 'vue-awesome/icons/times';
+import { createNamespacedHelpers } from 'vuex';
 import AwesomeIcon from 'vue-awesome/components/Icon';
 import Button from '@/components/Form/Button';
 import Input from '@/components/Form/Input';
 import { VEHICLE_TYPES } from '@/constants/vehicles';
-import { busRoutes, trolleybusRoutes, vehicles } from './constants';
+
+const {
+  mapState: mapRouteState,
+  mapActions: mapRouteActions,
+} = createNamespacedHelpers('routes');
+
+const {
+  mapState: mapVehicleState,
+  mapActions: mapVehicleActions,
+} = createNamespacedHelpers('vehicles');
 
 export default {
   name: 'Vehicles',
@@ -99,19 +110,32 @@ export default {
   data() {
     return {
       VEHICLE_TYPES,
-      busRoutes,
-      trolleybusRoutes,
-      vehicles,
+      newVehiclenumber: '',
       selectedVehicle: null,
       selectedRoute: null,
     };
   },
   computed: {
-    routes() {
-      if (this.selectedVehicle === 'Автобус') return busRoutes;
-      if (this.selectedVehicle === 'Троллейбус') return trolleybusRoutes;
-      return [];
+    ...mapRouteState(['routes']),
+    ...mapVehicleState(['vehicles']),
+    visibleRoutes() {
+      return this.routes.filter(item =>
+        this.selectedVehicle === item.vehicleType);
     },
+  },
+  methods: {
+    ...mapRouteActions(['getRoutes']),
+    ...mapVehicleActions(['getVehicles', 'addVehicle']),
+    save() {
+      this.addVehicle({
+        number: this.newVehiclenumber,
+        route: this.selectedRoute,
+      });
+    },
+  },
+  mounted() {
+    this.getVehicles();
+    this.getRoutes();
   },
 };
 </script>
