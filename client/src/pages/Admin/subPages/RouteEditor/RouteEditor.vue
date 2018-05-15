@@ -167,8 +167,10 @@ export default {
     route() {
       this.number = this.route.number;
       this.vehicleType = this.route.vehicleType;
-      this.selectedStops = this.stops.filter(item =>
-        this.route.stops.includes(item._id));
+      setTimeout(() => {
+        this.selectedStops = this.stops.filter(item =>
+          this.route.stops.includes(item._id));
+      }, 500);
     },
   },
 };
