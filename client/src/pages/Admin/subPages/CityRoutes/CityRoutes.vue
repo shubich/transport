@@ -62,10 +62,9 @@
             </router-link>
           </td>
           <td>
-            <awesome-icon
-              name="times"
-              class="icon delete"
-            />
+            <label @click="deleteRoute(item._id)">
+              <awesome-icon name="times" class="icon delete"/>
+            </label>
           </td>
         </tr>
       </tbody>
@@ -116,7 +115,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getRoutes']),
+    ...mapActions(['getRoutes', 'deleteRoute']),
   },
   mounted() {
     this.getRoutes();
