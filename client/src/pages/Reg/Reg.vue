@@ -16,8 +16,16 @@
           <Input class="form-control" type='text' v-model="cardNumber" />
         </label>
         <label class="form-group">
+          <div class="control-label">Логин</div>
+          <Input class="form-control" type='text' v-model="loginName" />
+        </label>
+        <label class="form-group">
           <div class="control-label">Пароль</div>
           <Input class="form-control" type='password' v-model="password" />
+        </label>
+        <label class="form-group">
+          <div class="control-label">Подтвердите пароль</div>
+          <Input class="form-control" type='password' v-model="confirmPassword" />
         </label>
         <div class="form-group">
           <Button text='Зарегистрироваться' type='primary' />
@@ -52,7 +60,9 @@ export default {
     return {
       ALERT_TYPES,
       cardNumber: '',
+      loginName: '',
       password: '',
+      confirmPassword: '',
     };
   },
   computed: {
@@ -66,9 +76,14 @@ export default {
       'signup',
     ]),
     onSubmit() {
-      const { cardNumber, password } = this;
-      if (cardNumber && password) {
-        this.signup({ cardNumber, password });
+      const { cardNumber, loginName, password, confirmPassword } = this;
+      if (
+        cardNumber
+        && loginName
+        && password
+        && password === confirmPassword
+      ) {
+        this.signup({ cardNumber, loginName, password });
       }
     },
   },

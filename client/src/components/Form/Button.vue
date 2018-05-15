@@ -1,6 +1,7 @@
 <template>
   <button
     :class="type"
+    @click="$emit('click', $event)"
   >
     {{text}}
   </button>
@@ -8,7 +9,7 @@
 
 <script>
 export default {
-  name: 'Login',
+  name: 'Button',
   props: {
     text: {
       type: String,
@@ -80,6 +81,21 @@ export default {
     &:active {
       background-color: $success-dark;
       border-color: $success-dark;
+    }
+  }
+
+  .warning {
+    background-color: $warning-light;
+    border-color: $warning-light;
+
+    &:hover, &:focus {
+      background-color: $warning;
+      border-color: $warning;
+    }
+
+    &:active {
+      background-color: $warning-dark;
+      border-color: $warning-dark;
     }
   }
 

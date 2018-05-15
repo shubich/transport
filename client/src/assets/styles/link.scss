@@ -1,0 +1,15 @@
+@import './palette';
+
+a {
+  color: $light-blue;
+  text-decoration: none;
+
+  &:hover, &:focus {
+    color: $blue;
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: $dark-blue;
+  }
+}

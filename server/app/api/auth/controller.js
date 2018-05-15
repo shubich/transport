@@ -1,9 +1,9 @@
 import UserService from '../../services/user';
 
 export function signin(req, res) {
-  const { cardNumber, password } = req.body;
+  const { loginName, password } = req.body;
 
-  UserService.signin(cardNumber, password)
+  UserService.signin(loginName, password)
     .then((user) => {
       if (!user) {
         res.status(403).send({ auth: false, message: 'User is not found' });
@@ -16,9 +16,9 @@ export function signin(req, res) {
 }
 
 export function signup(req, res) {
-  const { cardNumber, password } = req.body;
+  const { cardNumber, loginName, password } = req.body;
 
-  UserService.signup(cardNumber, password)
+  UserService.signup(cardNumber, loginName, password)
     .then((user) => {
       if (!user) {
         res.status(403).send({ auth: false, message: 'Registration error' });

@@ -3,9 +3,10 @@ import SECRET from './pem';
 import UserSchema from './userSchema';
 
 export default class User {
-  static signup(cardNumber, password) {
+  static signup(cardNumber, loginName, password) {
     const user = new UserSchema({
       cardNumber,
+      loginName,
       password,
     });
 
@@ -14,8 +15,8 @@ export default class User {
       .catch(() => null);
   }
 
-  static signin(cardNumber, password) {
-    return this.getUserByCardNumber(cardNumber)
+  static signin(loginName, password) {
+    return this.getUserByLoginName(loginName)
       .then((user) => {
         if (!user) return null;
 
@@ -26,10 +27,21 @@ export default class User {
       .catch(() => null);
   }
 
+  static getAllUsers() {
+    const query = UserSchema.find();
+    query.select('_id cardNumber loginName role active bill');
+
+    return query;
+  }
+
   static getUserByid(id) {
     return UserSchema.findOne({ _id: id })
       .then(user => (user || null))
       .catch(() => null);
+  }
+
+  static getUserByLoginName(loginName) {
+    return UserSchema.findOne({ loginName });
   }
 
   static getUserByCardNumber(cardNumber) {
@@ -37,7 +49,7 @@ export default class User {
   }
 
   static authentication(token) {
-    const { uid } = this.decodeToken(token);
+    const uid = token ? this.decodeToken(token).uid : null;
 
     return this.getUserByid(uid)
       .then((user) => {

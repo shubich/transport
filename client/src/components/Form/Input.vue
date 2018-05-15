@@ -3,12 +3,15 @@
     :type="type"
     :value="value"
     @input="$emit('input', $event.target.value)"
+    @focus='$emit("focus", $event)'
+    @blur='$emit("blur", $event)'
+    @keydown='$emit("keydown", $event)'
   >
 </template>
 
 <script>
 export default {
-  name: 'Login',
+  name: 'Input',
   props: [
     'type',
     'value',
