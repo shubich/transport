@@ -12,8 +12,8 @@
         class="form"
       >
         <label class="form-group">
-          <div class="control-label">Номер карты</div>
-          <Input class="form-control" type='text' v-model="cardNumber" />
+          <div class="control-label">Логин</div>
+          <Input class="form-control" type='text' v-model="loginName" />
         </label>
         <label class="form-group">
           <div class="control-label">Пароль</div>
@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       ALERT_TYPES,
-      cardNumber: '',
+      loginName: '',
       password: '',
     };
   },
@@ -67,9 +67,9 @@ export default {
       'signin',
     ]),
     onSubmit() {
-      const { cardNumber, password } = this;
-      if (cardNumber && password) {
-        this.signin({ cardNumber, password });
+      const { loginName, password } = this;
+      if (loginName && password) {
+        this.signin({ loginName, password });
       }
     },
   },
