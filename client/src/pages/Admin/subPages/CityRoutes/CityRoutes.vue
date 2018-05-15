@@ -10,16 +10,12 @@
         <Datepicker :date="endDate"/>
       </div>
       <Checkbox
+        v-for="item in VEHICLE_TYPES"
+        :key="item"
         type="primary"
-        label="Автобусы"
-        :checked="showBuses"
-        @click="showBuses=!showBuses"
-      />
-      <Checkbox
-        type="primary"
-        label="Троллейбусы"
-        :checked="showTrolleybuses"
-        @click="showTrolleybuses=!showTrolleybuses"
+        :label="item"
+        :checked="isVTActive(item)"
+        @click="toggleVT(item)"
       />
     </div>
     <table>
@@ -80,6 +76,7 @@ import { createNamespacedHelpers } from 'vuex';
 import Datepicker from '@/components/Form/Datepicker';
 import Button from '@/components/Form/Button';
 import Checkbox from '@/components/Form/Checkbox';
+import { VEHICLE_TYPES } from '@/constants/vehicles';
 
 const { mapState, mapActions } = createNamespacedHelpers('routes');
 
@@ -93,16 +90,18 @@ export default {
   },
   data() {
     return {
-      showBuses: true,
-      showTrolleybuses: true,
+      VEHICLE_TYPES,
+      activeVT: [...VEHICLE_TYPES],
     };
   },
   computed: {
     ...mapState(['routes']),
     visibleRoutes() {
+      const Bus = VEHICLE_TYPES[0];
+      const Trolleybus = VEHICLE_TYPES[1];
       return this.routes.filter((item) => {
-        if (item.vehicleType === 'Автобус' && this.showBuses) return item;
-        if (item.vehicleType === 'Троллейбус' && this.showTrolleybuses) return item;
+        if (item.vehicleType === Bus && this.isVTActive(Bus)) return true;
+        if (item.vehicleType === Trolleybus && this.isVTActive(Trolleybus)) return true;
         return false;
       });
     },
@@ -116,6 +115,18 @@ export default {
   },
   methods: {
     ...mapActions(['getRoutes', 'deleteRoute']),
+    isVTActive(VT) {
+      return this.activeVT.includes(VT);
+    },
+    toggleVT(VT) {
+      const index = this.activeVT.indexOf(VT);
+
+      if (index > -1) {
+        this.activeVT.splice(index, 1);
+      } else {
+        this.activeVT.push(VT);
+      }
+    },
   },
   mounted() {
     this.getRoutes();
@@ -166,6 +177,7 @@ export default {
 
   table {
     border-collapse: collapse;
+    width: 100%;
   }
 
   thead {

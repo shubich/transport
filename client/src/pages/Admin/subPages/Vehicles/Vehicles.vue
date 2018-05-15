@@ -9,7 +9,7 @@
         <span>Тип ТС</span>
         <select class="stretch" v-model="selectedVehicle">
           <option
-            v-for="item in vehicleTypes"
+            v-for="item in VEHICLE_TYPES"
             :value="item"
             :key="item"
           >
@@ -81,6 +81,7 @@ import 'vue-awesome/icons/times';
 import AwesomeIcon from 'vue-awesome/components/Icon';
 import Button from '@/components/Form/Button';
 import Input from '@/components/Form/Input';
+import { VEHICLE_TYPES } from '@/constants/vehicles';
 import { busRoutes, trolleybusRoutes, vehicles } from './constants';
 
 export default {
@@ -92,10 +93,10 @@ export default {
   },
   data() {
     return {
+      VEHICLE_TYPES,
       busRoutes,
       trolleybusRoutes,
       vehicles,
-      vehicleTypes: ['Автобус', 'Троллейбус'],
       selectedVehicle: null,
       selectedRoute: null,
     };

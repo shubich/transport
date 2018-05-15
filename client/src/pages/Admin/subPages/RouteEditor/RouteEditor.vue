@@ -86,7 +86,8 @@ import Autocomplete from '@/components/Form/Autocomplete';
 import Button from '@/components/Form/Button';
 import Input from '@/components/Form/Input';
 import Checkbox from '@/components/Form/Checkbox';
-import { VEHICLE_TYPES } from './constants';
+import { VEHICLE_TYPES } from '@/constants/vehicles';
+
 
 const { mapState: mapStopState, mapActions: mapStopActions } = createNamespacedHelpers('stops');
 const { mapState: mapRouteState, mapActions: mapRouteActions } = createNamespacedHelpers('routes');
