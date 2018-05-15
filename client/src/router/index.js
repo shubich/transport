@@ -9,6 +9,7 @@ import CityRoutes from '@/pages/Admin/subPages/CityRoutes';
 import RouteEditor from '@/pages/Admin/subPages/RouteEditor';
 import Stops from '@/pages/Admin/subPages/Stops';
 import Vehicles from '@/pages/Admin/subPages/Vehicles';
+import Users from '@/pages/Admin/subPages/Users';
 import Login from '@/pages/Login';
 import Reg from '@/pages/Reg';
 import Logout from '@/pages/Logout';
@@ -59,6 +60,10 @@ const router = new Router({
         {
           path: 'vehicles',
           component: Vehicles,
+        },
+        {
+          path: 'users',
+          component: Users,
         },
       ],
     },

@@ -9,3 +9,14 @@ export function me(req, res) {
     .catch(() => res.status(500), 'Server error');
 }
 
+export function getAllUsers(req, res) {
+  UserService.getAllUsers()
+    .then((data) => {
+      if (!data) {
+        res.status(403).send('Nothing here yet');
+      } else {
+        res.status(200).send(data);
+      }
+    })
+    .catch(() => res.status(403).send('Server error'));
+}

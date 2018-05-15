@@ -4,6 +4,7 @@ import auth from './modules/auth';
 import stops from './modules/stops';
 import routes from './modules/routes';
 import vehicles from './modules/vehicles';
+import users from './modules/users';
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     stops,
     routes,
     vehicles,
+    users,
   },
   actions: {
     reset({ commit }) {
@@ -22,6 +24,7 @@ export default new Vuex.Store({
       commit('stops/RESET');
       commit('routes/RESET');
       commit('vehicles/RESET');
+      commit('users/RESET');
     },
   },
   strict: debug,

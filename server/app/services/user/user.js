@@ -27,6 +27,13 @@ export default class User {
       .catch(() => null);
   }
 
+  static getAllUsers() {
+    const query = UserSchema.find();
+    query.select('_id cardNumber loginName role active bill');
+
+    return query;
+  }
+
   static getUserByid(id) {
     return UserSchema.findOne({ _id: id })
       .then(user => (user || null))

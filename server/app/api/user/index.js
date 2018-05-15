@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import { me/* , edit */ } from './controller';
+import { me, getAllUsers } from './controller';
 
 const router = new Router();
 
 router.get('/me', me);
-// router.put('/me/edit', edit);
+router.get('/all', getAllUsers);
 
 export default router;
