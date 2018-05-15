@@ -57,10 +57,10 @@
               {{item.number}}
             </td>
             <td>
-              {{item.type}}
+              {{item.route.vehicleType}}
             </td>
             <td>
-              {{item.route}}
+              {{item.route.number}}
             </td>
             <td>
               <awesome-icon
@@ -69,10 +69,12 @@
               />
             </td>
             <td>
-              <awesome-icon
-                name="times"
-                class="icon delete"
-              />
+              <label @click="deleteVehicle(item._id)">
+                <awesome-icon
+                  name="times"
+                  class="icon delete"
+                />
+              </label>
             </td>
           </tr>
         </tbody>
@@ -125,7 +127,7 @@ export default {
   },
   methods: {
     ...mapRouteActions(['getRoutes']),
-    ...mapVehicleActions(['getVehicles', 'addVehicle']),
+    ...mapVehicleActions(['getVehicles', 'addVehicle', 'deleteVehicle']),
     save() {
       this.addVehicle({
         number: this.newVehiclenumber,

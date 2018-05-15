@@ -1,5 +1,5 @@
 import VehicleSchema from './vehicleSchema';
-// import RouteService from '../route';
+import RouteService from '../route';
 
 export default class Vehicle {
   static addVehicle(number, route) {
@@ -30,18 +30,16 @@ export default class Vehicle {
 
   static async getAllVehicles() {
     const vehicles = await VehicleSchema.find();
-    // const fullVehicles = await Promise.all(vehicles.map(async (item) => {
-    //   const startStop = await StopService.getStopByid(item.stops[0]);
-    //   const endStop = await StopService.getStopByid(item.stops[item.stops.length - 1]);
+    const fullVehicles = await Promise.all(vehicles.map(async (item) => {
+      const route = await RouteService.getRouteByid(item.route);
 
-    //   return {
-    //     ...item._doc,
-    //     description: `${startStop.name} - ${endStop.name}`,
-    //   };
-    // }));
+      return {
+        ...item._doc,
+        route,
+      };
+    }));
 
-    // return fullVehicles;
-    return vehicles;
+    return fullVehicles;
   }
 
   static getVehicleByid(id) {
