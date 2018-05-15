@@ -6,7 +6,7 @@ import Routes from '@/pages/Routes';
 import Profile from '@/pages/Profile';
 import Admin from '@/pages/Admin';
 import CityRoutes from '@/pages/Admin/subPages/CityRoutes';
-import AddRoute from '@/pages/Admin/subPages/AddRoute';
+import RouteEditor from '@/pages/Admin/subPages/RouteEditor';
 import Stops from '@/pages/Admin/subPages/Stops';
 import Vehicles from '@/pages/Admin/subPages/Vehicles';
 import Login from '@/pages/Login';
@@ -46,11 +46,11 @@ const router = new Router({
         },
         {
           path: 'add-route',
-          component: AddRoute,
+          component: RouteEditor,
         },
         {
           path: 'edit-route/:id',
-          component: AddRoute,
+          component: RouteEditor,
         },
         {
           path: 'stops',

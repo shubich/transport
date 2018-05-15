@@ -84,7 +84,7 @@ import Input from '@/components/Form/Input';
 import { busRoutes, trolleybusRoutes, vehicles } from './constants';
 
 export default {
-  name: 'AddRoute',
+  name: 'Vehicles',
   components: {
     AwesomeIcon,
     Input,

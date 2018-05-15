@@ -92,7 +92,7 @@ const { mapState: mapStopState, mapActions: mapStopActions } = createNamespacedH
 const { mapState: mapRouteState, mapActions: mapRouteActions } = createNamespacedHelpers('routes');
 
 export default {
-  name: 'AddRoute',
+  name: 'RouteEditor',
   components: {
     AwesomeIcon,
     Autocomplete,
