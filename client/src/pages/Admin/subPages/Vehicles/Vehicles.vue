@@ -38,39 +38,44 @@
       </div>
     </div>
     <div class="center">
-      <div class="table">
-        <div class="row header">
-          <div class="column">Номер</div>
-          <div class="column">Тип ТС</div>
-          <div class="column">Маршрут</div>
-          <div class="column">Управление</div>
-        </div>
-        <div
-          v-for="(item) in vehicles"
-          class="row"
-          :key="item.number"
-        >
-          <div class="column">
-            {{item.number}}
-          </div>
-          <div class="column">
-            {{item.type}}
-          </div>
-          <div class="column">
-            {{item.route}}
-          </div>
-          <div class="column">
-            <awesome-icon
-              name="edit"
-              class="icon edit"
-            />
-            <awesome-icon
-              name="times"
-              class="icon delete"
-            />
-          </div>
-        </div>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Номер</th>
+            <th>Тип ТС</th>
+            <th>Маршрут</th>
+            <th colspan="2">Управление</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(item) in vehicles"
+            :key="item.number"
+          >
+            <td>
+              {{item.number}}
+            </td>
+            <td>
+              {{item.type}}
+            </td>
+            <td>
+              {{item.route}}
+            </td>
+            <td>
+              <awesome-icon
+                name="edit"
+                class="icon edit"
+              />
+            </td>
+            <td>
+              <awesome-icon
+                name="times"
+                class="icon delete"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -136,17 +141,15 @@ export default {
     }
   }
 
-  .row {
-    display: flex;
-    align-items: center;
-  }
-
   .left {
     flex: 1;
     display: flex;
     flex-direction: column;
 
     .row {
+      display: flex;
+      align-items: center;
+
       input, select {
         margin-left: 5px;
       }
@@ -160,31 +163,5 @@ export default {
   .center {
     flex: 3;
     margin-left: 15px;
-  }
-
-  .table {
-    .row {
-      display: flex;
-      align-items: center;
-
-      &.header {
-        background: $default;
-      }
-
-      .column {
-        flex: 1;
-        padding: 5px;
-        border-top: 1px solid $default-dark;
-        border-left: 1px solid $default-dark;
-
-        &:last-child {
-          border-right: 1px solid $default-dark;
-        }
-      }
-
-      &:last-child {
-        border-bottom: 1px solid $default-dark;
-      }
-    }
   }
 </style>

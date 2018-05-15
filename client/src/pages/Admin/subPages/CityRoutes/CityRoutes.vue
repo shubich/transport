@@ -174,23 +174,4 @@ export default {
       color: $danger;
     }
   }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  thead {
-    background: $default;
-  }
-
-  tbody {
-    text-align: center;
-  }
-
-  th, td {
-    border: 1px solid $default-dark;
-    font-weight: unset;
-    padding: 5px;
-  }
 </style>

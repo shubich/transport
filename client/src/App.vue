@@ -12,33 +12,13 @@ export default {
 
 <style lang="scss">
 @import './assets/styles/palette';
+@import './assets/styles/table';
+@import './assets/styles/form';
+@import './assets/styles/link';
 
 body {
   margin: 0;
   background: $gray;
   font-family: Arial;
-}
-
-a {
-  color: $light-blue;
-  text-decoration: none;
-
-  &:hover, &:focus {
-    color: $blue;
-    text-decoration: underline;
-  }
-
-  &:active {
-    color: $dark-blue;
-  }
-}
-
-select {
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #555;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
 </style>
