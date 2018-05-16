@@ -10,7 +10,8 @@
           :bill="user.bill"
         />
         <router-link
-          to="#"
+          to="balance"
+          append
           class="column pay margin-left"
         >
           <div>Пополнить счёт</div>

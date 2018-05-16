@@ -1,6 +1,9 @@
 <template>
   <div
     class="page"
+    :class="{
+      center: center,
+    }"
   >
     <slot></slot>
     <Nav
@@ -36,5 +39,11 @@ export default {
     position: fixed;
     bottom: 0;
     max-width: 800px;
+  }
+
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 </style>
