@@ -6,6 +6,7 @@
         <Card
           class="card"
           :cardNumber="user.cardNumber"
+          :loginName="user.loginName"
           :bill="user.bill"
         />
         <router-link

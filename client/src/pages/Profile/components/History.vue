@@ -1,11 +1,8 @@
 <template>
   <div class="history">
-    <div class="row margin-bottom">
+    <div class="row space-between margin-bottom">
       <div>История поездок</div>
-      <router-link
-        to="/logout"
-        class="margin-left"
-      >
+      <router-link to="#">
         показать все
       </router-link>
     </div>
@@ -70,8 +67,8 @@ export default {
     margin-bottom: 15px;
   }
 
-  .margin-left {
-    margin-left: 15px;
+  .space-between {
+    justify-content: space-between;
   }
 
   .history {

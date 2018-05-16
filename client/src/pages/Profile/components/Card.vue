@@ -7,7 +7,7 @@
       />
     </div>
     <div class="column">
-      <div class="number">{{cardNumber}}</div>
+      <div class="number">{{cardNumber}} ({{loginName}})</div>
       <div class="bill">{{bill}} BYN</div>
     </div>
   </div>
@@ -21,6 +21,7 @@ export default {
   name: 'Card',
   props: {
     cardNumber: String,
+    loginName: String,
     bill: String,
   },
   components: {
