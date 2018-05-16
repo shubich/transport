@@ -3,17 +3,11 @@
     <div class="margin-bottom">Быстрые платежи</div>
     <div class="row">
       <div class="column">
-        <awesome-icon
-          name="bus"
-          class="icon"
-        />
+        <Bus class="icon"/>
         <div>Автобус</div>
       </div>
       <div class="column">
-        <awesome-icon
-          name="subway"
-          class="icon"
-        />
+        <Trolleybus class="icon"/>
         <div>Троллейбус</div>
       </div>
     </div>
@@ -21,14 +15,14 @@
 </template>
 
 <script>
-import 'vue-awesome/icons/bus';
-import 'vue-awesome/icons/subway';
-import AwesomeIcon from 'vue-awesome/components/Icon';
+import Bus from '@/components/Icons/Bus';
+import Trolleybus from '@/components/Icons/Trolleybus';
 
 export default {
   name: 'Payments',
   components: {
-    AwesomeIcon,
+    Bus,
+    Trolleybus,
   },
 };
 </script>
@@ -57,6 +51,7 @@ export default {
 
   .icon {
     color: $blue;
+    fill: $blue;
     margin-bottom: 10px;
     width: 50px;
     height: 50px;

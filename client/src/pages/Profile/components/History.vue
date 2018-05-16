@@ -8,8 +8,12 @@
     </div>
     <div v-for="item in RIDES" :key="item.id" class="row ride margin-bottom">
       <div class="column vehicle">
-        <awesome-icon
-          :name="item.vehicleType"
+        <Bus
+          v-if="item.vehicleType==='bus'"
+          class="icon"
+        />
+        <Trolleybus
+          v-else-if="item.vehicleType==='trolleybus'"
           class="icon"
         />
         <div class="number">{{item.vehicleNumber}}</div>
@@ -37,11 +41,11 @@
 </template>
 
 <script>
-import 'vue-awesome/icons/bus';
-import 'vue-awesome/icons/subway';
 import 'vue-awesome/icons/circle';
 import 'vue-awesome/icons/arrow-down';
 import AwesomeIcon from 'vue-awesome/components/Icon';
+import Bus from '@/components/Icons/Bus';
+import Trolleybus from '@/components/Icons/Trolleybus';
 import { RIDES } from '../constants';
 
 export default {
@@ -56,6 +60,8 @@ export default {
   },
   components: {
     AwesomeIcon,
+    Bus,
+    Trolleybus,
   },
 };
 </script>
@@ -105,8 +111,9 @@ export default {
     }
 
     .number {
-      font-size: 30px;
-      width: 40px;
+      font-size: 25px;
+      line-height: 34px;
+      width: 30px;
       text-align: center;
     }
   }

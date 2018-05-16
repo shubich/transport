@@ -22,7 +22,7 @@ export default {
   props: {
     cardNumber: String,
     loginName: String,
-    bill: String,
+    bill: Number,
   },
   components: {
     AwesomeIcon,
