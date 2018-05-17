@@ -44,9 +44,17 @@ export default class Route {
     return fullRoutes;
   }
 
-  static getRouteByid(id) {
-    return RouteSchema.findOne({ _id: id })
-      .then(route => (route || null))
-      .catch(() => null);
+  static async getRouteByid(_id) {
+    const route = await RouteSchema.findOne({ _id });
+    const stops = await Promise.all(route.stops.map(async (item) => {
+      const stop = await StopService.getStopByid(item);
+
+      return { ...stop._doc };
+    }));
+
+    return {
+      ...route._doc,
+      stops,
+    };
   }
 }

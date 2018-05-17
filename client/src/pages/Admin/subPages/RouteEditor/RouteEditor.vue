@@ -105,8 +105,14 @@ export default {
     ...mapStopState(['stops']),
     ...mapRouteState(['route']),
     availableStops() {
-      return this.stops.filter(item =>
-        !this.selectedStops.includes(item));
+      return this.stopNames.filter(item =>
+        !this.selectedStopNames.includes(item));
+    },
+    stopNames() {
+      return this.stops.map(item => item.name);
+    },
+    selectedStopNames() {
+      return this.selectedStops.map(item => item.name);
     },
   },
   data() {
@@ -167,10 +173,7 @@ export default {
     route() {
       this.number = this.route.number;
       this.vehicleType = this.route.vehicleType;
-      setTimeout(() => {
-        this.selectedStops = this.stops.filter(item =>
-          this.route.stops.includes(item._id));
-      }, 500);
+      this.selectedStops = this.route.stops;
     },
   },
 };
