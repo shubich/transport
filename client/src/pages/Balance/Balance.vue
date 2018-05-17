@@ -44,7 +44,7 @@
       </div>
       <div class="row margin-bottom space-between">
         <router-link to="." class="cancel">Отмена</router-link>
-        <Button type="primary" text="Подтвердить"/>
+        <Button type="primary" text="Подтвердить" @click="putMoney"/>
       </div>
     </div>
   </MainPage>
@@ -54,6 +54,7 @@
 import MainPage from '@/components/Page/MainPage';
 import Button from '@/components/Form/Button';
 import Input from '@/components/Form/Input';
+import api from '@/api';
 
 export default {
   name: 'Balance',
@@ -75,6 +76,9 @@ export default {
     },
     sumDec() {
       this.sum -= this.sum > 0 ? 1 : 0;
+    },
+    putMoney() {
+      api.users.putMoney({ sum: this.sum });
     },
   },
 };

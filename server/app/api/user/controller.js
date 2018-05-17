@@ -20,3 +20,18 @@ export function getAllUsers(req, res) {
     })
     .catch(() => res.status(403).send('Server error'));
 }
+
+export function putMoney(req, res) {
+  const token = req.header('Authorization');
+  const { sum } = req.body;
+
+  UserService.putMoney(token, sum)
+    .then((data) => {
+      if (!data) {
+        res.status(403).send('Error');
+      } else {
+        res.status(200).send('Success');
+      }
+    })
+    .catch(() => res.status(403).send('Server error'));
+}

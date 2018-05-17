@@ -48,6 +48,14 @@ export default class User {
     return UserSchema.findOne({ cardNumber });
   }
 
+  static async putMoney(token, sum) {
+    const uid = token ? this.decodeToken(token).uid : null;
+    const user = await this.getUserByid(uid);
+    const newBill = user.bill + sum;
+
+    return UserSchema.findByIdAndUpdate(uid, { bill: newBill });
+  }
+
   static authentication(token) {
     const uid = token ? this.decodeToken(token).uid : null;
 
@@ -68,7 +76,7 @@ export default class User {
     return jwt.sign({
       uid: user._id,
       cardNumber: user.cardNumber,
-    }, SECRET, { expiresIn: '7d' });
+    }, SECRET, { expiresIn: '21d' });
   }
 
   static isJwtTokenExpired(token) {
