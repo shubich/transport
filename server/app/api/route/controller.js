@@ -59,3 +59,16 @@ export function getRouteByid(req, res) {
     .catch(() => res.status(403).send('Server error'));
 }
 
+export function getRoutesByStops(req, res) {
+  const { from, to } = req.body;
+
+  RouteService.getRoutesByStops(from, to)
+    .then((data) => {
+      if (!data) {
+        res.status(403).send('Nothing');
+      } else {
+        res.status(200).send(data);
+      }
+    })
+    .catch(() => res.status(403).send('Server error'));
+}

@@ -1,5 +1,5 @@
 <template>
-  <table>
+  <table v-if="vehicles.length">
     <thead>
       <tr>
         <th>Транспорт</th>
@@ -8,21 +8,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr v-for="item in vehicles" :key="item._id">
         <td class="column-vehicle">
-          <Bus class="icon vehicle"/>
-          <div class="route-number">6</div>
+          <Bus v-if="item.vehicleType==='Автобус'" class="icon vehicle"/>
+          <Trolleybus v-else-if="item.vehicleType==='Троллейбус'" class="icon vehicle"/>
+          <div class="route-number">{{item.number}}</div>
         </td>
-        <td>6</td>
-        <td>12 минут</td>
-      </tr>
-      <tr>
-        <td class="column-vehicle">
-          <Trolleybus class="icon vehicle"/>
-          <div class="route-number">1</div>
-        </td>
-        <td>6</td>
-        <td>15 минут</td>
+        <td>{{item.stopsQuantity}}</td>
+        <td>{{getRandomTime(item.stopsQuantity)}}</td>
       </tr>
     </tbody>
   </table>
@@ -38,11 +31,19 @@ export default {
     Bus,
     Trolleybus,
   },
+  props: {
+    vehicles: Array,
+  },
   computed: {
   },
   mounted() {
   },
   methods: {
+    getRandomTime(quantity) {
+      const min = quantity || 1;
+      const max = min * 3;
+      return Math.floor(Math.random() * (max - min) + min);
+    },
   },
 };
 </script>

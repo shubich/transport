@@ -18,6 +18,7 @@
             resultsValue="_id"
             resultsDisplay="name"
             :clearOnSelect="false"
+            @select="onStopFromSelect"
           />
         </div>
         <div class="row">
@@ -32,6 +33,7 @@
             resultsValue="_id"
             resultsDisplay="name"
             :clearOnSelect="false"
+            @select="onStopToSelect"
           />
         </div>
       </div>
@@ -63,11 +65,38 @@ export default {
   props: {
     stops: Array,
   },
+  data() {
+    return {
+      from: null,
+      to: null,
+    };
+  },
   computed: {
+    stopsSelected() {
+      return this.from && this.to;
+    },
   },
   mounted() {
   },
   methods: {
+    /* eslint-disable no-underscore-dangle */
+    onStopFromSelect(stop) {
+      this.from = stop._id;
+      this.onSubmit();
+    },
+    onStopToSelect(stop) {
+      this.to = stop._id;
+      this.onSubmit();
+    },
+    onSubmit() {
+      if (!this.stopsSelected) {
+        return;
+      }
+      this.$emit('submit', {
+        from: this.from,
+        to: this.to,
+      });
+    },
   },
 };
 </script>

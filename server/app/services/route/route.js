@@ -57,4 +57,13 @@ export default class Route {
       stops,
     };
   }
+
+  static getRoutesByStops(from, to) {
+    return RouteSchema.find({
+      $and: [
+        { stops: from },
+        { stops: to },
+      ],
+    });
+  }
 }
