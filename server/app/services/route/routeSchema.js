@@ -13,6 +13,7 @@ const RouteSchema = new mongoose.Schema({
     required: true,
   },
   stops: [String],
+  stopsReverse: [String],
 });
 
 export default mongoose.model('Route', RouteSchema);

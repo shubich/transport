@@ -1,9 +1,11 @@
 import RouteService from '../../services/route';
 
 export function addRoute(req, res) {
-  const { number, vehicleType, stops } = req.body;
+  const {
+    number, vehicleType, stops, stopsReverse,
+  } = req.body;
 
-  RouteService.addRoute(number, vehicleType, stops)
+  RouteService.addRoute(number, vehicleType, stops, stopsReverse)
     .then((route) => {
       if (!route) {
         res.status(403).send('Route already exist');

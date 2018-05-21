@@ -2,11 +2,12 @@ import RouteSchema from './routeSchema';
 import StopService from '../stop';
 
 export default class Route {
-  static addRoute(number, vehicleType, stops) {
+  static addRoute(number, vehicleType, stops, stopsReverse) {
     const route = new RouteSchema({
       number,
       vehicleType,
       stops,
+      stopsReverse,
     });
 
     return route.save()
@@ -52,9 +53,16 @@ export default class Route {
       return { ...stop._doc };
     }));
 
+    const stopsReverse = await Promise.all(route.stopsReverse.map(async (item) => {
+      const stop = await StopService.getStopByid(item);
+
+      return { ...stop._doc };
+    }));
+
     return {
       ...route._doc,
       stops,
+      stopsReverse,
     };
   }
 
