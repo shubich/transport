@@ -25,18 +25,24 @@
 
       </div>
 
-      <Payments class="margin-bottom"/>
+      <Payments class="margin-bottom" @submit="addRide"/>
       <History class="margin-bottom"/>
     </div>
   </MainPage>
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
 import axios from 'axios';
 import MainPage from '@/components/Page/MainPage';
 import Card from './components/Card';
 import Payments from './components/Payments';
 import History from './components/History';
+
+const {
+  mapState: mapRideState,
+  mapActions: mapRideActions,
+} = createNamespacedHelpers('rides');
 
 export default {
   name: 'Profile',
@@ -50,6 +56,13 @@ export default {
     return {
       user: {},
     };
+  },
+  computed: {
+    ...mapRideState(['rides']),
+
+  },
+  methods: {
+    ...mapRideActions(['addRide', 'getUserRides']),
   },
   mounted() {
     axios.get('http://localhost:2000/user/me')

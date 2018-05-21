@@ -115,15 +115,15 @@ export default {
 
       if (!selectedVehicle || !from || !to) return;
 
-      // const data = {
-      //   vehicle: selectedVehicle,
-      //   from,
-      //   to,
-      // };
+      const data = {
+        vehicle: selectedVehicle,
+        from,
+        to,
+      };
+
+      this.$emit('submit', data);
 
       this.paid = true;
-
-      // console.dir(data);
     },
     reset() {
       this.paid = false;

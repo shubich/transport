@@ -4,6 +4,7 @@ import UserRouter from './user';
 import StopRouter from './stop';
 import RouteRouter from './route';
 import VehicleRouter from './vehicle';
+import RideRouter from './ride';
 import { ROUTES } from '../constants';
 import authMiddleware from './middlewares/authMiddleware';
 
@@ -18,6 +19,7 @@ router.use(ROUTES.user, UserRouter);
 router.use(ROUTES.stop, StopRouter);
 router.use(ROUTES.route, RouteRouter);
 router.use(ROUTES.vehicle, VehicleRouter);
+router.use(ROUTES.ride, RideRouter);
 
 // 404 Not Found
 router.all('*', (req, res) => res.sendStatus(404));
