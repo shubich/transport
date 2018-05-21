@@ -49,7 +49,7 @@ export default {
         });
     },
     calculateStopsQuantity(way, stops) {
-      return Math.abs(stops.indexOf(way.from) - stops.indexOf(way.to) - 1);
+      return Math.abs(stops.indexOf(way.from) - stops.indexOf(way.to)) - 1;
     },
   },
 };

@@ -42,7 +42,8 @@ export default {
     getRandomTime(quantity) {
       const min = quantity || 1;
       const max = min * 3;
-      return Math.floor(Math.random() * (max - min) + min);
+
+      return Math.floor(Math.random() * (max - min)) + min;
     },
   },
 };
