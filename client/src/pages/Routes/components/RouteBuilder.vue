@@ -4,46 +4,7 @@
       <h1>Маршрут</h1>
       <a class="link">Сбросить</a>
     </div>
-    <div class="row margin-bottom">
-      <div class="column col-4">
-        <div class="row margin-bottom">
-          <awesome-icon
-            name="circle"
-            class="icon from"
-          />
-          <Autocomplete
-            class="margin-left"
-            placeholder="Откуда"
-            :source="stops"
-            resultsValue="_id"
-            resultsDisplay="name"
-            :clearOnSelect="false"
-            @select="onStopFromSelect"
-          />
-        </div>
-        <div class="row">
-          <awesome-icon
-            name="circle"
-            class="icon to"
-          />
-          <Autocomplete
-            class="margin-left"
-            placeholder="Куда"
-            :source="stops"
-            resultsValue="_id"
-            resultsDisplay="name"
-            :clearOnSelect="false"
-            @select="onStopToSelect"
-          />
-        </div>
-      </div>
-      <div class="column col-0 margin-left">
-        <awesome-icon
-          name="arrows-alt-v"
-          class="icon arrows"
-        />
-      </div>
-    </div>
+    <FromTo class="margin-bottom" @submit="onSubmit"/>
     <div class="row space-around">
       <a class="link">Показать на карте</a>
     </div>
@@ -54,48 +15,23 @@
 import 'vue-awesome/icons/circle';
 import 'vue-awesome/icons/arrows-alt-v';
 import AwesomeIcon from 'vue-awesome/components/Icon';
-import Autocomplete from '@/components/Form/Autocomplete';
+import FromTo from '@/components/FromTo';
 
 export default {
   name: 'Routes',
   components: {
     AwesomeIcon,
-    Autocomplete,
-  },
-  props: {
-    stops: Array,
+    FromTo,
   },
   data() {
     return {
-      from: null,
-      to: null,
     };
-  },
-  computed: {
-    stopsSelected() {
-      return this.from && this.to;
-    },
   },
   mounted() {
   },
   methods: {
-    /* eslint-disable no-underscore-dangle */
-    onStopFromSelect(stop) {
-      this.from = stop._id;
-      this.onSubmit();
-    },
-    onStopToSelect(stop) {
-      this.to = stop._id;
-      this.onSubmit();
-    },
-    onSubmit() {
-      if (!this.stopsSelected) {
-        return;
-      }
-      this.$emit('submit', {
-        from: this.from,
-        to: this.to,
-      });
+    onSubmit(stops) {
+      this.$emit('submit', stops);
     },
   },
 };
@@ -123,20 +59,6 @@ export default {
 .row {
   display: flex;
   align-items: center;
-}
-
-.col-0 { flex: 0; }
-.col-1 { flex: 1; }
-.col-2 { flex: 2; }
-.col-3 { flex: 3; }
-.col-4 { flex: 4; }
-
-.from { color: $red; }
-.to { color: $blue; }
-
-.arrows {
-  width: 25px;
-  height: 25px;
 }
 
 .route-builder {
