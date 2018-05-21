@@ -36,6 +36,10 @@
         <div>{{item.from.name}}</div>
         <div>{{item.to.name}}</div>
       </div>
+      <div class="column dates">
+        <div class="time">{{getTime(item.date)}}</div>
+        <div class="date">{{getDate(item.date)}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -43,12 +47,18 @@
 <script>
 import 'vue-awesome/icons/circle';
 import 'vue-awesome/icons/arrow-down';
+import dateFormat from 'dateformat';
 import AwesomeIcon from 'vue-awesome/components/Icon';
 import Bus from '@/components/Icons/Bus';
 import Trolleybus from '@/components/Icons/Trolleybus';
 
 export default {
   name: 'History',
+  components: {
+    AwesomeIcon,
+    Bus,
+    Trolleybus,
+  },
   props: {
     rides: Array,
   },
@@ -56,10 +66,13 @@ export default {
     return {
     };
   },
-  components: {
-    AwesomeIcon,
-    Bus,
-    Trolleybus,
+  methods: {
+    getDate(stringDate) {
+      return dateFormat(stringDate, 'dd.mm.yyyy');
+    },
+    getTime(stringDate) {
+      return dateFormat(stringDate, 'HH:MM');
+    },
   },
 };
 </script>
@@ -95,6 +108,10 @@ export default {
     flex-direction: column;
   }
 
+  .dates {
+    align-items: center;
+  }
+
   .vehicle {
     flex-direction: row;
     margin-right: 5px;
@@ -119,6 +136,7 @@ export default {
   .stops {
     height: 45px;
     justify-content: space-between;
+    flex: 1;
   }
 
   .direction {

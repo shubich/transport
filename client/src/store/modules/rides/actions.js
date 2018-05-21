@@ -8,7 +8,10 @@ export default {
         commit(MUTATIONS.SET_RIDES, response.data);
       });
   },
-  addRide: (store, data) => {
-    api.rides.addRide(data);
+  addRide: ({ dispatch }, data) => {
+    api.rides.addRide(data)
+      .then(() => {
+        dispatch('getUserRides');
+      });
   },
 };
