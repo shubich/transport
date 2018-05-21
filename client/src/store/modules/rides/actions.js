@@ -2,7 +2,7 @@ import api from '@/api';
 import * as MUTATIONS from './mutation-types';
 
 export default {
-  getRides: ({ commit }) => {
+  getUserRides: ({ commit }) => {
     api.rides.getUserRides()
       .then((response) => {
         commit(MUTATIONS.SET_RIDES, response.data);

@@ -18,7 +18,7 @@ export function addRide(req, res) {
 
 export function getUserRides(req, res) {
   const token = req.header('Authorization');
-  const uid = token ? RideService.decodeToken(token).uid : null;
+  const uid = token ? UserService.decodeToken(token).uid : null;
 
   RideService.getUserRides(uid)
     .then((data) => {

@@ -6,17 +6,17 @@
         показать все
       </router-link>
     </div>
-    <div v-for="item in RIDES" :key="item.id" class="row ride margin-bottom">
+    <div v-for="item in rides" :key="item._id" class="row ride margin-bottom">
       <div class="column vehicle">
         <Bus
-          v-if="item.vehicleType==='bus'"
+          v-if="item.vehicle.route.vehicleType==='Автобус'"
           class="icon"
         />
         <Trolleybus
-          v-else-if="item.vehicleType==='trolleybus'"
+          v-else-if="item.vehicle.route.vehicleType==='Троллейбус'"
           class="icon"
         />
-        <div class="number">{{item.vehicleNumber}}</div>
+        <div class="number">{{item.vehicle.route.number}}</div>
       </div>
       <div class="column direction">
         <awesome-icon
@@ -33,8 +33,8 @@
         />
       </div>
       <div class="column stops">
-        <div>{{item.from}}</div>
-        <div>{{item.to}}</div>
+        <div>{{item.from.name}}</div>
+        <div>{{item.to.name}}</div>
       </div>
     </div>
   </div>
@@ -46,16 +46,14 @@ import 'vue-awesome/icons/arrow-down';
 import AwesomeIcon from 'vue-awesome/components/Icon';
 import Bus from '@/components/Icons/Bus';
 import Trolleybus from '@/components/Icons/Trolleybus';
-import { RIDES } from '../constants';
 
 export default {
   name: 'History',
   props: {
-
+    rides: Array,
   },
   data() {
     return {
-      RIDES,
     };
   },
   components: {

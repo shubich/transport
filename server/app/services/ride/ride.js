@@ -1,4 +1,6 @@
 import RideSchema from './rideSchema';
+import StopService from '../stop';
+import VehicleService from '../vehicle';
 
 export default class Stop {
   static addRide(user, vehicle, from, to) {
@@ -11,7 +13,21 @@ export default class Stop {
       .catch(() => null);
   }
 
-  static getUserRides(uid) {
-    return RideSchema.find({ user: uid });
+  static async getUserRides(uid) {
+    const rides = await RideSchema.find({ user: uid });
+    const fullRides = await Promise.all(rides.map(async (item) => {
+      const from = await StopService.getStopByid(item.from);
+      const to = await StopService.getStopByid(item.to);
+      const vehicle = await VehicleService.getVehicleByid(item.vehicle);
+
+      return {
+        ...item._doc,
+        vehicle,
+        from,
+        to,
+      };
+    }));
+
+    return fullRides;
   }
 }

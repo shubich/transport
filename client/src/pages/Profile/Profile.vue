@@ -26,7 +26,7 @@
       </div>
 
       <Payments class="margin-bottom" @submit="addRide"/>
-      <History class="margin-bottom"/>
+      <History class="margin-bottom" :rides="rides"/>
     </div>
   </MainPage>
 </template>
@@ -59,12 +59,12 @@ export default {
   },
   computed: {
     ...mapRideState(['rides']),
-
   },
   methods: {
     ...mapRideActions(['addRide', 'getUserRides']),
   },
   mounted() {
+    this.getUserRides();
     axios.get('http://localhost:2000/user/me')
       .then((response) => {
         this.user = response.data;

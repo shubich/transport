@@ -42,9 +42,13 @@ export default class Vehicle {
     return fullVehicles;
   }
 
-  static getVehicleByid(id) {
-    return VehicleSchema.findOne({ _id: id })
-      .then(vehicle => (vehicle || null))
-      .catch(() => null);
+  static async getVehicleByid(id) {
+    const vehicle = await VehicleSchema.findOne({ _id: id });
+    const route = await RouteService.getRouteByid(vehicle.route);
+
+    return {
+      ...vehicle._doc,
+      route,
+    };
   }
 }
