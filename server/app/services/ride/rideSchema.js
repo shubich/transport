@@ -2,12 +2,18 @@ import mongoose from '../../mongo';
 
 const RideSchema = new mongoose.Schema({
   user: {
-    type: Object,
+    type: String,
     required: true,
   },
   vehicle: {
-    type: Object,
+    type: String,
     required: true,
+  },
+  from: {
+    type: String,
+  },
+  to: {
+    type: String,
   },
   payment: {
     type: Number,

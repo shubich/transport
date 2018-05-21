@@ -32,7 +32,7 @@
           />
         </div>
       </div>
-      <div class="column col-0 margin-left">
+      <div v-if="reverse" class="column col-0 margin-left">
         <awesome-icon
           name="arrows-alt-v"
           class="icon arrows"
@@ -55,6 +55,12 @@ export default {
   components: {
     AwesomeIcon,
     Autocomplete,
+  },
+  props: {
+    reverse: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
