@@ -33,7 +33,7 @@
           class="margin-left stretch"
           resultsValue="_id"
           resultsDisplay="name"
-          :source="availableStops"
+          :source="stops"
           @select="onStopSelect"
         />
         <Button
@@ -104,16 +104,6 @@ export default {
   computed: {
     ...mapStopState(['stops']),
     ...mapRouteState(['route']),
-    availableStops() {
-      return this.stopNames.filter(item =>
-        !this.selectedStopNames.includes(item));
-    },
-    stopNames() {
-      return this.stops.map(item => item.name);
-    },
-    selectedStopNames() {
-      return this.selectedStops.map(item => item.name);
-    },
   },
   data() {
     return {
