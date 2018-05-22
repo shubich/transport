@@ -17,7 +17,7 @@ const RideSchema = new mongoose.Schema({
   },
   payment: {
     type: Number,
-    default: 50,
+    default: 0.5,
   },
   date: {
     type: Date,

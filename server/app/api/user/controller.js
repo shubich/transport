@@ -23,9 +23,10 @@ export function getAllUsers(req, res) {
 
 export function putMoney(req, res) {
   const token = req.header('Authorization');
+  const uid = token ? UserService.decodeToken(token).uid : null;
   const { sum } = req.body;
 
-  UserService.putMoney(token, sum)
+  UserService.putMoney(uid, sum)
     .then((data) => {
       if (!data) {
         res.status(403).send('Error');

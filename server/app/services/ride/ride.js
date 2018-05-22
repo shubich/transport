@@ -1,6 +1,7 @@
 import RideSchema from './rideSchema';
 import StopService from '../stop';
 import VehicleService from '../vehicle';
+import UserService from '../user';
 
 export default class Stop {
   static addRide(user, vehicle, from, to) {
@@ -9,12 +10,15 @@ export default class Stop {
     });
 
     return ride.save()
-      .then(() => ride)
+      .then(() => {
+        UserService.putMoney(user, -(ride.payment));
+        return ride;
+      })
       .catch(() => null);
   }
 
   static async getUserRides(uid) {
-    const rides = await RideSchema.find({ user: uid });
+    const rides = await RideSchema.find({ user: uid }).sort('-date');
     const fullRides = await Promise.all(rides.map(async (item) => {
       const from = await StopService.getStopByid(item.from);
       const to = await StopService.getStopByid(item.to);

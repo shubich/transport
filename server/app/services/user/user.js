@@ -48,8 +48,7 @@ export default class User {
     return UserSchema.findOne({ cardNumber });
   }
 
-  static async putMoney(token, sum) {
-    const uid = token ? this.decodeToken(token).uid : null;
+  static async putMoney(uid, sum) {
     const user = await this.getUserByid(uid);
     const newBill = user.bill + sum;
 
