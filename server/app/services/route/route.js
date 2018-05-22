@@ -31,7 +31,9 @@ export default class Route {
   }
 
   static async getAllRoutes() {
-    const routes = await RouteSchema.find();
+    const routes = await RouteSchema
+      .find();
+      // .sort('vehicleType number');
     const fullRoutes = await Promise.all(routes.map(async (item) => {
       const startStop = await StopService.getStopByid(item.stops[0]);
       const endStop = await StopService.getStopByid(item.stops[item.stops.length - 1]);

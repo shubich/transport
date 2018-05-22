@@ -1,5 +1,6 @@
 import api from '@/api';
 import * as MUTATIONS from './mutation-types';
+import * as ALERT_MUTATIONS from '../alerts/mutation-types';
 
 export default {
   getRoutes: ({ commit }) => {
@@ -14,8 +15,16 @@ export default {
         commit(MUTATIONS.SET_ROUTE, response.data);
       });
   },
-  addRoute: (store, data) => {
-    api.routes.addRoute(data);
+  addRoute: ({ commit }, data) => {
+    api.routes.addRoute(data)
+      .then((response) => {
+        commit(`alerts/${ALERT_MUTATIONS.SET_ALERT}`,
+          { type: 'success', message: response.data }, { root: true });
+      })
+      .catch((err) => {
+        commit(`alerts/${ALERT_MUTATIONS.SET_ALERT}`,
+          { type: 'danger', message: err.response.data }, { root: true });
+      });
   },
   editRoute: (store, data) => {
     api.routes.editRoute(data);

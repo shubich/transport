@@ -1,17 +1,30 @@
 <template>
   <div
-    :class="type"
+    class="alert"
+    :class="alert.type"
   >
-    {{text}}
+    {{alert.message || "Route already exist"}}
   </div>
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+
+const {
+  mapState,
+} = createNamespacedHelpers('alerts');
+
 export default {
   name: 'Alert',
-  props: {
-    text: String,
-    type: String,
+  computed: {
+    ...mapState(['alert']),
+  },
+  data() {
+    return {
+      displayedAlert: null,
+    };
+  },
+  methods: {
   },
 };
 </script>
@@ -19,15 +32,28 @@ export default {
 <style lang="scss" scoped>
   @import '../../assets/styles/palette';
 
+  .alert {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 300px;
+    height: 100px;
+    background: green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $white;
+  }
+
   .primary {
-    color: $blue;
+    background: $blue;
   }
 
   .success {
-    color: $green;
+    background: $green;
   }
 
   .danger {
-    color: $red;
+    background: $red;
   }
 </style>

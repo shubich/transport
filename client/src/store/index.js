@@ -6,6 +6,7 @@ import routes from './modules/routes';
 import vehicles from './modules/vehicles';
 import rides from './modules/rides';
 import users from './modules/users';
+import alerts from './modules/alerts';
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     vehicles,
     users,
     rides,
+    alerts,
   },
   actions: {
     reset({ commit }) {
@@ -28,6 +30,7 @@ export default new Vuex.Store({
       commit('vehicles/RESET');
       commit('users/RESET');
       commit('rides/RESET');
+      commit('alerts/RESET');
     },
   },
   strict: debug,
