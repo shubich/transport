@@ -5,6 +5,7 @@ import mutations from './mutations';
 export const initialState = () => ({
   me: {},
   users: [],
+  builtRoute: null,
 });
 
 export default {

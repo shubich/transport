@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import dateFormat from 'dateformat';
 import Bus from '@/components/Icons/Bus';
 import Trolleybus from '@/components/Icons/Trolleybus';
 
@@ -42,8 +43,14 @@ export default {
     getRandomTime(quantity) {
       const min = quantity || 1;
       const max = min * 3;
+      const randomTime = Math.floor(Math.random() * (max - min)) + min;
+      const date = new Date(0, 0, 0, 0, randomTime);
 
-      return Math.floor(Math.random() * (max - min)) + min;
+      if (date.getHours() === 0) {
+        return dateFormat(date, 'M мин');
+      }
+
+      return dateFormat(date, 'H час M мин');
     },
   },
 };
