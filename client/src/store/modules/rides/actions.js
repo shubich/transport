@@ -12,6 +12,7 @@ export default {
     api.rides.addRide(data)
       .then(() => {
         dispatch('getUserRides');
+        dispatch('users/getMe', null, { root: true });
       });
   },
 };

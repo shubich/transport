@@ -8,4 +8,10 @@ export default {
         commit(MUTATIONS.SET_USERS, response.data);
       });
   },
+  getMe: ({ commit }) => {
+    api.users.getMe()
+      .then((response) => {
+        commit(MUTATIONS.SET_ME, response.data);
+      });
+  },
 };

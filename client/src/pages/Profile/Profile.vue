@@ -5,9 +5,9 @@
 
         <Card
           class="card"
-          :cardNumber="user.cardNumber"
-          :loginName="user.loginName"
-          :bill="user.bill"
+          :cardNumber="me.cardNumber"
+          :loginName="me.loginName"
+          :bill="me.bill"
         />
         <router-link
           to="balance"
@@ -33,11 +33,15 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-import axios from 'axios';
 import MainPage from '@/components/Page/MainPage';
 import Card from './components/Card';
 import Payments from './components/Payments';
 import History from './components/History';
+
+const {
+  mapState: mapUserState,
+  mapActions: mapUserActions,
+} = createNamespacedHelpers('users');
 
 const {
   mapState: mapRideState,
@@ -54,21 +58,19 @@ export default {
   },
   data() {
     return {
-      user: {},
     };
   },
   computed: {
     ...mapRideState(['rides']),
+    ...mapUserState(['me']),
   },
   methods: {
     ...mapRideActions(['addRide', 'getUserRides']),
+    ...mapUserActions(['getMe']),
   },
   mounted() {
     this.getUserRides();
-    axios.get('http://localhost:2000/user/me')
-      .then((response) => {
-        this.user = response.data;
-      });
+    this.getMe();
   },
 };
 </script>

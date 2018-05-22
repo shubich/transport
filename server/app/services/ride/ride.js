@@ -18,7 +18,10 @@ export default class Stop {
   }
 
   static async getUserRides(uid) {
-    const rides = await RideSchema.find({ user: uid }).sort('-date');
+    const rides = await RideSchema
+      .find({ user: uid })
+      .sort('-date');
+
     const fullRides = await Promise.all(rides.map(async (item) => {
       const from = await StopService.getStopByid(item.from);
       const to = await StopService.getStopByid(item.to);
