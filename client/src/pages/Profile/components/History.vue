@@ -3,10 +3,12 @@
     <div class="row space-between margin-bottom">
       <div>История поездок</div>
       <router-link to="#">
-        показать все
+        <span @click="toggleShowAll">
+          {{showAll ? "скрыть" : "показать все"}}
+        </span>
       </router-link>
     </div>
-    <div v-for="item in rides" :key="item._id" class="row ride margin-bottom">
+    <div v-for="item in visibleRides" :key="item._id" class="row ride margin-bottom">
       <div class="column vehicle">
         <Bus
           v-if="item.vehicle.route.vehicleType==='Автобус'"
@@ -64,9 +66,20 @@ export default {
   },
   data() {
     return {
+      showAll: false,
     };
   },
+  computed: {
+    visibleRides() {
+      return this.showAll
+        ? this.rides
+        : this.rides.slice(0, 3);
+    },
+  },
   methods: {
+    toggleShowAll() {
+      this.showAll = !this.showAll;
+    },
     getDate(stringDate) {
       return dateFormat(stringDate, 'dd.mm.yyyy');
     },
