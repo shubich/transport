@@ -1,12 +1,6 @@
 <template>
   <Page center>
     <div class="container">
-      <Alert
-        v-if="authStatus"
-        class="status"
-        :type="ALERT_TYPES[authStatus]"
-        :text="authStatus"
-      />
       <form
         @submit.prevent="onSubmit"
         class="form"
@@ -38,10 +32,8 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import Page from '@/components/Page/Page';
-import Alert from '@/components/Alert';
 import Input from '@/components/Form/Input';
 import Button from '@/components/Form/Button';
-import { ALERT_TYPES } from './config';
 
 const {
   mapActions,
@@ -52,13 +44,11 @@ export default {
   name: 'Reg',
   components: {
     Page,
-    Alert,
     Input,
     Button,
   },
   data() {
     return {
-      ALERT_TYPES,
       cardNumber: '',
       loginName: '',
       password: '',
@@ -77,14 +67,7 @@ export default {
     ]),
     onSubmit() {
       const { cardNumber, loginName, password, confirmPassword } = this;
-      if (
-        cardNumber
-        && loginName
-        && password
-        && password === confirmPassword
-      ) {
-        this.signup({ cardNumber, loginName, password });
-      }
+      this.signup({ cardNumber, loginName, password, confirmPassword });
     },
   },
   watch: {
@@ -119,9 +102,5 @@ export default {
     color: $gray;
     opacity: .5;
     margin-bottom: 5px;
-  }
-
-  .status {
-    margin-bottom: 10px;
   }
 </style>

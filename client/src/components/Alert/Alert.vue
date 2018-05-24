@@ -87,6 +87,10 @@ export default {
     z-index: -1;
   }
 
+  .message {
+    padding: 15px;
+  }
+
   .close {
     position: absolute;
     top: 15px;
