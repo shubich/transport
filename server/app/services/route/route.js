@@ -1,5 +1,7 @@
 import RouteSchema from './routeSchema';
 import StopService from '../stop';
+import VehicleService from '../vehicle';
+import RideService from '../ride';
 
 export default class Route {
   static addRoute(number, vehicleType, stops, stopsReverse) {
@@ -36,15 +38,25 @@ export default class Route {
       // .sort('vehicleType number');
     const fullRoutes = await Promise.all(routes.map(async (item) => {
       let description;
+
       if (item.stops.length) {
         const startStop = await StopService.getStopByid(item.stops[0]);
         const endStop = await StopService.getStopByid(item.stops[item.stops.length - 1]);
         description = `${startStop.name} - ${endStop.name}`;
       }
 
+      const vehicles = await VehicleService.getVehiclesByRoute(item._id);
+      const rides = await RideService
+        .getRidesByVehicles(vehicles.map(vehicle => ({ vehicle: vehicle._id })));
+      const payments = rides.map(el => el.payment);
+      const profit = payments.reduce((prev, cur) => prev + cur, 0);
+
       return {
         ...item._doc,
         description,
+        count: vehicles.length,
+        passengers: rides.length,
+        profit,
       };
     }));
 

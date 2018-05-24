@@ -51,4 +51,8 @@ export default class Vehicle {
       route,
     };
   }
+
+  static async getVehiclesByRoute(route) {
+    return VehicleSchema.find({ route });
+  }
 }

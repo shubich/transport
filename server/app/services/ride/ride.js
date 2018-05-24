@@ -37,4 +37,8 @@ export default class Stop {
 
     return fullRides;
   }
+
+  static getRidesByVehicles(vehicles) {
+    return RideSchema.find({ $or: vehicles });
+  }
 }
