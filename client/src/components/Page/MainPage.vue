@@ -16,7 +16,7 @@
 import Nav from '../Nav';
 
 export default {
-  name: 'Page',
+  name: 'MainPage',
   components: {
     Nav,
   },

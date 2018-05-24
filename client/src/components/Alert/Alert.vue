@@ -69,20 +69,25 @@ export default {
     transition-duration: 1s;
   }
 
+  .primary { @include bs($blue) }
+  .success { @include bs($green) }
+  .danger { @include bs($red) }
+
   .alert {
-    position: fixed;
+    position: absolute;
     bottom: 10px;
     right: 10px;
     width: 300px;
     height: 100px;
-    background: $black;
     display: flex;
     justify-content: center;
     align-items: center;
     color: $white;
+    z-index: 1;
   }
 
   .hidden {
+    background: $white;
     opacity: 0;
     z-index: -1;
   }
@@ -96,8 +101,4 @@ export default {
     top: 15px;
     right: 15px;
   }
-
-  .primary { @include bs($blue) }
-  .success { @include bs($green) }
-  .danger { @include bs($red) }
 </style>
