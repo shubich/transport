@@ -13,6 +13,10 @@ tbody {
   text-align: center;
 }
 
+tbody tr:hover {
+  background: $default-light;
+}
+
 th, td {
   border: 1px solid $default-dark;
   font-weight: unset;
