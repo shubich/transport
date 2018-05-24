@@ -35,12 +35,16 @@ export default class Route {
       .find();
       // .sort('vehicleType number');
     const fullRoutes = await Promise.all(routes.map(async (item) => {
-      const startStop = await StopService.getStopByid(item.stops[0]);
-      const endStop = await StopService.getStopByid(item.stops[item.stops.length - 1]);
+      let description;
+      if (item.stops.length) {
+        const startStop = await StopService.getStopByid(item.stops[0]);
+        const endStop = await StopService.getStopByid(item.stops[item.stops.length - 1]);
+        description = `${startStop.name} - ${endStop.name}`;
+      }
 
       return {
         ...item._doc,
-        description: `${startStop.name} - ${endStop.name}`,
+        description,
       };
     }));
 

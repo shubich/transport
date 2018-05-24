@@ -1,6 +1,6 @@
 import api from '@/api';
 import * as MUTATIONS from './mutation-types';
-import * as ALERT_MUTATIONS from '../alerts/mutation-types';
+import * as ALERT_MUTATIONS from '../alerts/mutation-types-global';
 
 export default {
   getRoutes: ({ commit }) => {
@@ -17,22 +17,36 @@ export default {
   },
   addRoute: ({ commit }, data) => {
     api.routes.addRoute(data)
-      .then((response) => {
-        commit(`alerts/${ALERT_MUTATIONS.SET_ALERT}`,
-          { type: 'success', message: response.data }, { root: true });
+      .then(() => {
+        commit(ALERT_MUTATIONS.SET_ALERT_SUCCESS,
+          'Маршрут добавлен!', { root: true });
       })
-      .catch((err) => {
-        commit(`alerts/${ALERT_MUTATIONS.SET_ALERT}`,
-          { type: 'danger', message: err.response.data }, { root: true });
+      .catch(() => {
+        commit(ALERT_MUTATIONS.SET_ALERT_DANGER,
+          'Ошибка! Заполните все поля', { root: true });
       });
   },
-  editRoute: (store, data) => {
-    api.routes.editRoute(data);
+  editRoute: ({ commit }, data) => {
+    api.routes.editRoute(data)
+      .then(() => {
+        commit(ALERT_MUTATIONS.SET_ALERT_SUCCESS,
+          'Маршрут обновлён!', { root: true });
+      })
+      .catch(() => {
+        commit(ALERT_MUTATIONS.SET_ALERT_DANGER,
+          'Ошибка! Заполните все поля', { root: true });
+      });
   },
-  deleteRoute: ({ dispatch }, id) => {
+  deleteRoute: ({ commit, dispatch }, id) => {
     api.routes.deleteRoute(id)
       .then(() => {
         dispatch('getRoutes');
+        commit(ALERT_MUTATIONS.SET_ALERT_SUCCESS,
+          'Маршрут удален!', { root: true });
+      })
+      .catch(() => {
+        commit(ALERT_MUTATIONS.SET_ALERT_DANGER,
+          'Ошибка! Попробуйте позже', { root: true });
       });
   },
 };
