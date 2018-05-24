@@ -1,5 +1,6 @@
 import api from '@/api';
 import * as MUTATIONS from './mutation-types';
+import * as ALERT_MUTATIONS from '../alerts/mutation-types-global';
 
 export default {
   getStops: ({ commit }) => {
@@ -8,21 +9,31 @@ export default {
         commit(MUTATIONS.SET_STOPS, response.data);
       });
   },
-  addStop: ({ dispatch }, data) => {
+  addStop: ({ commit, dispatch }, data) => {
     api.stops.addStop(data)
       .then(() => {
+        commit(ALERT_MUTATIONS.SET_ALERT_SUCCESS,
+          'Остановка добавлена!', { root: true });
         dispatch('getStops');
+      })
+      .catch(() => {
+        commit(ALERT_MUTATIONS.SET_ALERT_DANGER,
+          'Ошибка! Заполните все поля', { root: true });
       });
   },
-  editStop: ({ dispatch }, data) => {
+  editStop: ({ commit, dispatch }, data) => {
     api.stops.editStop(data)
       .then(() => {
+        commit(ALERT_MUTATIONS.SET_ALERT_SUCCESS,
+          'Остановка обновлена!', { root: true });
         dispatch('getStops');
       });
   },
-  deleteStop: ({ dispatch }, name) => {
+  deleteStop: ({ commit, dispatch }, name) => {
     api.stops.deleteStop(name)
       .then(() => {
+        commit(ALERT_MUTATIONS.SET_ALERT_SUCCESS,
+          'Остановка удалена!', { root: true });
         dispatch('getStops');
       });
   },

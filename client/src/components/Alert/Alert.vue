@@ -70,7 +70,7 @@ export default {
   }
 
   .alert {
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     right: 10px;
     width: 300px;
@@ -84,6 +84,7 @@ export default {
 
   .hidden {
     opacity: 0;
+    z-index: -1;
   }
 
   .close {
