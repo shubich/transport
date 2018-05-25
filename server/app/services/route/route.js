@@ -48,8 +48,7 @@ export default class Route {
       const vehicles = await VehicleService.getVehiclesByRoute(item._id);
       const rides = await RideService
         .getRidesByVehicles(vehicles.map(vehicle => ({ vehicle: vehicle._id })));
-      const payments = rides.map(el => el.payment);
-      const profit = payments.reduce((prev, cur) => prev + cur, 0);
+      const profit = rides.reduce((prev, cur) => prev + cur.payment, 0);
 
       return {
         ...item._doc,
