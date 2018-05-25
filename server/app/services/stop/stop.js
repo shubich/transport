@@ -1,9 +1,11 @@
 import StopSchema from './stopSchema';
 
 export default class Stop {
-  static addStop(name) {
+  static addStop(name, longitude, latitude) {
     const stop = new StopSchema({
       name,
+      longitude,
+      latitude,
     });
 
     return stop.save()
@@ -27,7 +29,7 @@ export default class Stop {
   }
 
   static getAllStops() {
-    return StopSchema.find();
+    return StopSchema.find().sort('name');
   }
 
   static getStopByid(id) {
