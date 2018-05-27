@@ -5,6 +5,8 @@ import mutations from './mutations';
 export const initialState = () => ({
   routes: [],
   route: {},
+  routesByStops: [],
+  way: null,
 });
 
 export default {

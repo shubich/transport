@@ -49,4 +49,11 @@ export default {
           'Ошибка! Попробуйте позже', { root: true });
       });
   },
+  getRoutesByStops({ commit }, way) {
+    api.routes.getRoutesByStops(way)
+      .then((res) => {
+        commit(MUTATIONS.SET_ROUTES_BY_STOPS, res.data.routes);
+        commit(MUTATIONS.SET_WAY, res.data.way);
+      });
+  },
 };

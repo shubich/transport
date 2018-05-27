@@ -1,8 +1,8 @@
 <template>
   <MainPage>
     <div class="container">
-      <RouteBuilder :stops="stops" @submit="getRoutesByStops"/>
-      <VehiclesOnRoute :vehicles="vehicles"/>
+      <RouteBuilder :stops="stops" @submit="getRoutesByStops" @showOnMap="showOnMap"/>
+      <VehiclesOnRoute :vehicles="routesByStops"/>
     </div>
   </MainPage>
 </template>
@@ -10,7 +10,6 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import MainPage from '@/components/Page/MainPage';
-import api from '@/api';
 import RouteBuilder from './components/RouteBuilder';
 import VehiclesOnRoute from './components/VehiclesOnRoute';
 
@@ -18,6 +17,11 @@ const {
   mapState: mapStopState,
   mapActions: mapStopActions,
 } = createNamespacedHelpers('stops');
+
+const {
+  mapState: mapRouteState,
+  mapActions: mapRouteActions,
+} = createNamespacedHelpers('routes');
 
 export default {
   name: 'Routes',
@@ -28,28 +32,24 @@ export default {
   },
   computed: {
     ...mapStopState(['stops']),
+    ...mapRouteState(['routesByStops', 'way']),
   },
   data() {
     return {
       vehicles: [],
+      stopFrom: null,
+      stopTo: null,
     };
   },
   mounted() {
     this.getStops();
   },
   methods: {
+    /* eslint-disable no-underscore-dangle */
     ...mapStopActions(['getStops']),
-    getRoutesByStops(way) {
-      api.routes.getRoutesByStops(way)
-        .then((res) => {
-          this.vehicles = res.data.map(item => ({
-            ...item,
-            stopsQuantity: this.calculateStopsQuantity(way, item.stops),
-          }));
-        });
-    },
-    calculateStopsQuantity(way, stops) {
-      return Math.abs(stops.indexOf(way.from) - stops.indexOf(way.to)) - 1;
+    ...mapRouteActions(['getRoutesByStops']),
+    showOnMap() {
+      this.$router.push('/');
     },
   },
 };

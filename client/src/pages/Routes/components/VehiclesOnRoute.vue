@@ -72,4 +72,8 @@ export default {
   display: inline-block;
   vertical-align: bottom;
 }
+
+table {
+  text-align: center;
+}
 </style>

@@ -83,12 +83,51 @@ export default class Route {
     };
   }
 
-  static getRoutesByStops(from, to) {
-    return RouteSchema.find({
+  static async getRoutesByStops(from, to) {
+    const routes = await RouteSchema.find({
       $and: [
         { stops: from },
         { stops: to },
       ],
     });
+
+    const fullRoutes = await Promise.all(routes.map(async (route) => {
+      let fromIndex = route.stops.indexOf(from);
+      let toIndex = route.stops.indexOf(to);
+
+      /* eslint-disable no-bitwise */
+      if (fromIndex > toIndex) {
+        fromIndex ^= toIndex;
+        toIndex ^= fromIndex;
+        fromIndex ^= toIndex;
+      }
+
+      const stops = route.stops.slice(fromIndex, toIndex + 1);
+
+      if (stops[0] !== from) {
+        stops.reverse();
+      }
+
+      const fullStops = await Promise.all(stops.map(async (item) => {
+        const stop = await StopService.getStopByid(item);
+
+        return { ...stop._doc };
+      }));
+
+      const stopsQuantity = Math.abs(route.stops.indexOf(from) - route.stops.indexOf(to)) - 1;
+
+      return { ...route._doc, stops: fullStops, stopsQuantity };
+    }));
+
+    const stopFrom = await StopService.getStopByid(from);
+    const stopTo = await StopService.getStopByid(to);
+
+    return {
+      routes: fullRoutes,
+      way: {
+        from: stopFrom,
+        to: stopTo,
+      },
+    };
   }
 }

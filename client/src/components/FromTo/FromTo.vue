@@ -1,44 +1,44 @@
 <template>
-    <div class="row">
-      <div class="column col-4">
-        <div class="row margin-bottom">
-          <awesome-icon
-            name="circle"
-            class="icon from"
-          />
-          <Autocomplete
-            class="margin-left"
-            placeholder="Откуда"
-            :source="stops"
-            resultsValue="_id"
-            resultsDisplay="name"
-            :clearOnSelect="false"
-            @select="onStopFromSelect"
-          />
-        </div>
-        <div class="row">
-          <awesome-icon
-            name="circle"
-            class="icon to"
-          />
-          <Autocomplete
-            class="margin-left"
-            placeholder="Куда"
-            :source="stops"
-            resultsValue="_id"
-            resultsDisplay="name"
-            :clearOnSelect="false"
-            @select="onStopToSelect"
-          />
-        </div>
-      </div>
-      <div v-if="reverse" class="column col-0 margin-left">
+  <div class="from-to row">
+    <div class="column col-4">
+      <div class="row margin-bottom">
         <awesome-icon
-          name="arrows-alt-v"
-          class="icon arrows"
+          name="circle"
+          class="icon from"
+        />
+        <Autocomplete
+          class="margin-left"
+          placeholder="Откуда"
+          :source="stops"
+          resultsValue="_id"
+          resultsDisplay="name"
+          :clearOnSelect="false"
+          @select="onStopFromSelect"
+        />
+      </div>
+      <div class="row">
+        <awesome-icon
+          name="circle"
+          class="icon to"
+        />
+        <Autocomplete
+          class="margin-left"
+          placeholder="Куда"
+          :source="stops"
+          resultsValue="_id"
+          resultsDisplay="name"
+          :clearOnSelect="false"
+          @select="onStopToSelect"
         />
       </div>
     </div>
+    <div v-if="reverse" class="column col-0 margin-left">
+      <awesome-icon
+        name="arrows-alt-v"
+        class="icon arrows"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -103,6 +103,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets/styles/palette';
+
+.from-to {
+ text-align: left;
+}
 
 .margin-left {
   margin-left: 15px;

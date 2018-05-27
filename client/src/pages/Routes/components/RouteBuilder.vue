@@ -6,7 +6,7 @@
     </div>
     <FromTo class="margin-bottom" @submit="onSubmit"/>
     <div class="row space-around">
-      <a class="link">Показать на карте</a>
+      <a class="link" @click="$emit('showOnMap')">Показать на карте</a>
     </div>
   </section>
 </template>
