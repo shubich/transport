@@ -10,7 +10,8 @@
             :key="item.number"
             :value="index"
           >
-            {{item.number}}
+            {{item.vehicleType}}
+            №{{item.number}}
           </option>
         </select>
       </div>
