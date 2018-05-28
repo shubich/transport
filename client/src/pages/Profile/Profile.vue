@@ -26,13 +26,13 @@
       </div>
 
       <Payments class="margin-bottom" @submit="addRide"/>
-      <History class="margin-bottom" :rides="rides"/>
+      <History class="margin-bottom" :rides="rides" @rideClick="onRideClick"/>
     </div>
     <Modal
       v-if="showModal"
       @close="showModal=false"
     >
-      Modal content
+      <QR :text="qrText"/>
     </Modal>
   </MainPage>
 </template>
@@ -41,6 +41,7 @@
 import { createNamespacedHelpers } from 'vuex';
 import MainPage from '@/components/Page/MainPage';
 import Modal from '@/components/Modal';
+import QR from '@/components/QR';
 import Card from './components/Card';
 import Payments from './components/Payments';
 import History from './components/History';
@@ -63,10 +64,12 @@ export default {
     Payments,
     History,
     Modal,
+    QR,
   },
   data() {
     return {
-      showModal: true,
+      showModal: false,
+      qrText: null,
     };
   },
   computed: {
@@ -76,6 +79,10 @@ export default {
   methods: {
     ...mapRideActions(['addRide', 'getUserRides']),
     ...mapUserActions(['getMe']),
+    onRideClick(rideId) {
+      this.showModal = true;
+      this.qrText = rideId;
+    },
   },
   mounted() {
     this.getUserRides();

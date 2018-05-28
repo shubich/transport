@@ -8,7 +8,12 @@
         </span>
       </router-link>
     </div>
-    <div v-for="item in visibleRides" :key="item._id" class="row ride margin-bottom">
+    <div
+      v-for="item in visibleRides"
+      :key="item._id"
+      @click="$emit('rideClick', item._id)"
+      class="row ride margin-bottom"
+    >
       <div class="column vehicle">
         <Bus
           v-if="item.vehicle.route.vehicleType==='Автобус'"

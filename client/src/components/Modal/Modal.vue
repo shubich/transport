@@ -40,16 +40,16 @@ export default {
   @import '../../assets/styles/palette';
 
   .modal {
+    display: flex;
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(108, 113, 119); /* Fallback color */
-    background-color: rgba(108, 113, 119, 0.4); /* Black w/ opacity */
+    background-color: rgba(108, 113, 119, 0.5); /* Black w/ opacity */
   }
 
   .body {
@@ -57,7 +57,7 @@ export default {
     margin: auto;
     padding: 25px;
     border: 4px solid $primary;
-    width: 500px;
+    width: 640px;
     position: relative;
   }
 
