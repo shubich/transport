@@ -11,7 +11,7 @@
     <div
       v-for="item in visibleRides"
       :key="item._id"
-      @click="$emit('rideClick', item._id)"
+      @click="$emit('rideClick', item)"
       class="row ride margin-bottom"
     >
       <div class="column vehicle">

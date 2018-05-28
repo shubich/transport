@@ -63,7 +63,7 @@ export default {
 
   .content {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
   }
 
   .close {

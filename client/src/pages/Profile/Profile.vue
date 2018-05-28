@@ -32,6 +32,23 @@
       v-if="showModal"
       @close="showModal=false"
     >
+      <div class="ride">
+        <div>
+          {{selectedRide.vehicle.route.vehicleType}}
+          №{{selectedRide.vehicle.route.number}}
+          ({{selectedRide.vehicle.number}})
+        </div>
+        <br>
+        <div>
+          {{formatTime(selectedRide.date)}}
+        </div>
+        <div>
+          {{selectedRide.from.name}}
+          &mdash;
+          {{selectedRide.to.name}}
+        </div>
+        <div>Оплата {{selectedRide.payment}} BYN</div>
+      </div>
       <QR :text="qrText"/>
     </Modal>
   </MainPage>
@@ -39,6 +56,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
+import dateFormat from 'dateformat';
 import MainPage from '@/components/Page/MainPage';
 import Modal from '@/components/Modal';
 import QR from '@/components/QR';
@@ -70,6 +88,7 @@ export default {
     return {
       showModal: false,
       qrText: null,
+      selectedRide: null,
     };
   },
   computed: {
@@ -77,12 +96,17 @@ export default {
     ...mapUserState(['me']),
   },
   methods: {
+    /* eslint-disable no-underscore-dangle */
     ...mapRideActions(['addRide', 'getUserRides']),
     ...mapUserActions(['getMe']),
-    onRideClick(rideId) {
+    onRideClick(ride) {
+      this.selectedRide = ride;
       this.showModal = true;
-      this.qrText = rideId;
+      this.qrText = ride._id;
     },
+    formatTime(time) {
+      return dateFormat(time, 'dd.mm.yyyy в HH:MM');
+    }
   },
   mounted() {
     this.getUserRides();
