@@ -1,7 +1,12 @@
 <template>
   <MainPage>
     <div class="container">
-      <RouteBuilder :stops="stops" @submit="getRoutesByStops" @showOnMap="showOnMap"/>
+      <RouteBuilder
+        :stops="stops"
+        @submit="getRoutesByStops"
+        @showOnMap="showOnMap"
+        @reset="reset"
+      />
       <VehiclesOnRoute :vehicles="routesByStops"/>
     </div>
   </MainPage>
@@ -21,6 +26,7 @@ const {
 const {
   mapState: mapRouteState,
   mapActions: mapRouteActions,
+  mapMutations: mapRouteMutations,
 } = createNamespacedHelpers('routes');
 
 export default {
@@ -36,20 +42,27 @@ export default {
   },
   data() {
     return {
-      vehicles: [],
       stopFrom: null,
       stopTo: null,
     };
   },
   mounted() {
+    this.reset();
     this.getStops();
   },
   methods: {
     /* eslint-disable no-underscore-dangle */
     ...mapStopActions(['getStops']),
     ...mapRouteActions(['getRoutesByStops']),
+    ...mapRouteMutations({
+      resetRoutes: 'RESET',
+    }),
     showOnMap() {
       this.$router.push('/');
+    },
+    reset() {
+      this.resetRoutes();
+      window.dispatchEvent(new Event('reset'));
     },
   },
 };

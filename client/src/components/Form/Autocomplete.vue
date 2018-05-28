@@ -34,9 +34,18 @@ export default {
       this.$emit('select', item.selectedObject);
       // access the autocomplete component methods from the parent
       if (this.clearOnSelect) {
-        this.$refs.autocomplete.clearValues();
+        this.reset();
       }
     },
+    reset() {
+      this.$refs.autocomplete.clearValues();
+    },
+  },
+  mounted() {
+    window.addEventListener('reset', this.reset);
+  },
+  beforeDestroy() {
+    window.removeEventListener('reset', this.reset);
   },
 };
 </script>

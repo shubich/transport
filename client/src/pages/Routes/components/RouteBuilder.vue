@@ -2,7 +2,7 @@
   <section class="route-builder">
     <div class="row margin-bottom space-between">
       <h1>Маршрут</h1>
-      <a class="link">Сбросить</a>
+      <a class="link" @click="$emit('reset')">Сбросить</a>
     </div>
     <FromTo class="margin-bottom" @submit="onSubmit"/>
     <div class="row space-around">
