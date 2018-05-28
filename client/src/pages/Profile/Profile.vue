@@ -28,12 +28,19 @@
       <Payments class="margin-bottom" @submit="addRide"/>
       <History class="margin-bottom" :rides="rides"/>
     </div>
+    <Modal
+      v-if="showModal"
+      @close="showModal=false"
+    >
+      Modal content
+    </Modal>
   </MainPage>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import MainPage from '@/components/Page/MainPage';
+import Modal from '@/components/Modal';
 import Card from './components/Card';
 import Payments from './components/Payments';
 import History from './components/History';
@@ -55,9 +62,11 @@ export default {
     Card,
     Payments,
     History,
+    Modal,
   },
   data() {
     return {
+      showModal: true,
     };
   },
   computed: {
