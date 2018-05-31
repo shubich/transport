@@ -3,6 +3,7 @@
 a {
   color: $light-blue;
   text-decoration: none;
+  cursor: pointer;
 
   &:hover, &:focus {
     color: $blue;

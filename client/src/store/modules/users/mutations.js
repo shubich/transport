@@ -5,6 +5,9 @@ export default {
   [MUTATIONS.SET_USERS]: (state, users) => {
     state.users = users;
   },
+  [MUTATIONS.SET_ME]: (state, me) => {
+    state.me = me;
+  },
   [MUTATIONS.RESET](state) {
     const defaultState = initialState();
     Object.keys(defaultState).forEach((key) => {

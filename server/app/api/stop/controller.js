@@ -1,9 +1,9 @@
 import StopService from '../../services/stop';
 
 export function addStop(req, res) {
-  const { name } = req.body;
+  const { name, longitude, latitude } = req.body;
 
-  StopService.addStop(name)
+  StopService.addStop(name, longitude, latitude)
     .then((stop) => {
       if (!stop) {
         res.status(403).send('Stop already exist');

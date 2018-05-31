@@ -19,7 +19,7 @@
           <td>{{item.loginName}}</td>
           <td>{{item.role}}</td>
           <td>{{item.active ? "Active" : "Blocked"}}</td>
-          <td>{{item.bill}}</td>
+          <td>{{item.bill}} BYN</td>
         </tr>
       </tbody>
     </table>

@@ -17,4 +17,7 @@ export default {
   deleteRoute(id) {
     return axios.delete(`${HOST}:${PORT}/route`, { data: { id } });
   },
+  getRoutesByStops(data) {
+    return axios.post(`${HOST}:${PORT}/route/by-stops`, data);
+  },
 };

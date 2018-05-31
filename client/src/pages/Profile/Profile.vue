@@ -1,104 +1,116 @@
 <template>
   <MainPage>
     <div class="container">
-      <div class="card margin-bottom">
-        <div class="column">
-          <awesome-icon
-            name="credit-card"
-            class="icon"
-          />
-        </div>
-        <div class="column">
-          <div class="number">1234 5678 9012 3456</div>
-          <div class="bill">4,37 BYN</div>
-        </div>
+      <div class="row margin-bottom">
+
+        <Card
+          class="card"
+          :cardNumber="me.cardNumber"
+          :loginName="me.loginName"
+          :bill="me.bill"
+        />
+        <router-link
+          to="balance"
+          append
+          class="column pay margin-left"
+        >
+          <div>Пополнить счёт</div>
+        </router-link>
+        <router-link
+          to="/logout"
+          class="column exit margin-left"
+        >
+          <div>Выйти</div>
+        </router-link>
+
       </div>
-      <Button type="success" text="Пополнить счёт" class="stretch margin-bottom"/>
-      <div class="payments margin-bottom">
-        <div class="margin-bottom">Быстрые платежи</div>
-        <div class="row">
-          <div class="column">
-            <awesome-icon
-              name="bus"
-              class="icon"
-            />
-            <div>Автобус</div>
-          </div>
-          <div class="column">
-            <awesome-icon
-              name="subway"
-              class="icon"
-            />
-            <div>Троллейбус</div>
-          </div>
-        </div>
-      </div>
-      <div class="history margin-bottom">
-        <div class="margin-bottom">История поездок</div>
-        <div v-for="item in RIDES" :key="item.id" class="row ride">
-          <div class="column vehicle">
-            <awesome-icon
-              :name="item.vehicleType"
-              class="icon"
-            />
-            <div class="number">{{item.vehicleNumber}}</div>
-          </div>
-          <div class="column icons">
-            <awesome-icon
-              name="circle"
-              class="icon from"
-            />
-            <awesome-icon
-              name="arrow-down"
-              class="icon"
-            />
-            <awesome-icon
-              name="circle"
-              class="icon to"
-            />
-          </div>
-          <div class="column stops">
-            <div>{{item.from}}</div>
-            <div>{{item.to}}</div>
-          </div>
-        </div>
-      </div>
-      <Button type="warning" text="Все поездки" class="stretch margin-bottom"/>
-      <!-- <pre>{{user}}</pre> -->
+
+      <Payments class="margin-bottom" @submit="addRide"/>
+      <History class="margin-bottom" :rides="rides" @rideClick="onRideClick"/>
     </div>
+    <Modal
+      v-if="showModal"
+      @close="showModal=false"
+    >
+      <div class="ride">
+        <div>
+          {{selectedRide.vehicle.route.vehicleType}}
+          №{{selectedRide.vehicle.route.number}}
+          ({{selectedRide.vehicle.number}})
+        </div>
+        <br>
+        <div>
+          {{formatTime(selectedRide.date)}}
+        </div>
+        <div>
+          {{selectedRide.from.name}}
+          &mdash;
+          {{selectedRide.to.name}}
+        </div>
+        <div>Оплата {{selectedRide.payment}} BYN</div>
+      </div>
+      <QR :text="qrText"/>
+    </Modal>
   </MainPage>
 </template>
 
 <script>
-import 'vue-awesome/icons/credit-card';
-import 'vue-awesome/icons/bus';
-import 'vue-awesome/icons/subway';
-import 'vue-awesome/icons/circle';
-import 'vue-awesome/icons/arrow-down';
-import AwesomeIcon from 'vue-awesome/components/Icon';
-import axios from 'axios';
+import { createNamespacedHelpers } from 'vuex';
+import dateFormat from 'dateformat';
 import MainPage from '@/components/Page/MainPage';
-import Button from '@/components/Form/Button';
-import { RIDES } from './constants';
+import Modal from '@/components/Modal';
+import QR from '@/components/QR';
+import Card from './components/Card';
+import Payments from './components/Payments';
+import History from './components/History';
+
+const {
+  mapState: mapUserState,
+  mapActions: mapUserActions,
+} = createNamespacedHelpers('users');
+
+const {
+  mapState: mapRideState,
+  mapActions: mapRideActions,
+} = createNamespacedHelpers('rides');
 
 export default {
   name: 'Profile',
   components: {
-    AwesomeIcon,
     MainPage,
-    Button,
+    Card,
+    Payments,
+    History,
+    Modal,
+    QR,
   },
   data() {
     return {
-      RIDES,
-      user: null,
+      showModal: false,
+      qrText: null,
+      selectedRide: null,
     };
   },
+  computed: {
+    ...mapRideState(['rides']),
+    ...mapUserState(['me']),
+  },
+  methods: {
+    /* eslint-disable no-underscore-dangle */
+    ...mapRideActions(['addRide', 'getUserRides']),
+    ...mapUserActions(['getMe']),
+    onRideClick(ride) {
+      this.selectedRide = ride;
+      this.showModal = true;
+      this.qrText = ride._id;
+    },
+    formatTime(time) {
+      return dateFormat(time, 'dd.mm.yyyy в HH:MM');
+    }
+  },
   mounted() {
-    axios.get('http://localhost:2000/user/me')
-      .then((response) => {
-        this.user = response.data;
-      });
+    this.getUserRides();
+    this.getMe();
   },
 };
 </script>
@@ -106,120 +118,46 @@ export default {
 <style lang="scss" scoped>
   @import '../../assets/styles/palette';
 
-  .container {
-    padding: 15px;
-  }
+  $margin-size: 15px;
 
   .margin-bottom {
-    margin-bottom: 15px;
+    margin-bottom: $margin-size;
+  }
+
+  .margin-left {
+    margin-left: 15px;
   }
 
   .stretch {
     width: 100%;
   }
 
-  .card {
-    background: $gray;
-    color: $white;
-    padding: 10px 15px;
+  .container {
+    padding: 15px;
+  }
+
+  .row {
     display: flex;
+  }
+
+  .column {
+    flex: 1;
+    display: flex;
+    justify-content: center;
     align-items: center;
-
-    .column {
-      &:not(:last-child) {
-        margin-right: 15px;
-      }
-    }
-
-    .icon {
-      width: 45px;
-      height: 45px;
-    }
-
-    .number {
-      margin-bottom: 10px;
-    }
   }
 
-  .payments {
-    padding: 15px;
-    background: $default;
-
-    .row {
-      display: flex;
-
-      .column {
-        background: $default-dark;
-        text-align: center;
-        padding: 15px;
-
-        &:not(:last-child) {
-          margin-right: 15px;
-        }
-
-        .icon {
-          color: $blue;
-          margin-bottom: 10px;
-          width: 50px;
-          height: 50px;
-        }
-      }
-    }
+  .card {
+    flex: 3;
   }
 
-  .history {
-    background: $default;
-    padding: 15px;
+  .pay {
+    background: $green;
+    color: $white;
+  }
 
-    .ride {
-      background: $default-dark;
-      padding: 15px;
-    }
-
-    .row {
-      display: flex;
-      align-items: center;
-
-      .column {
-        display: flex;
-        flex-direction: column;
-
-        &.vehicle {
-          flex-direction: row;
-          margin-right: 5px;
-          padding: 5px;
-          background: $blue;
-          color: $white;
-
-          .icon {
-            width: 30px;
-            height: 30px;
-            margin-right: 5px;
-          }
-
-          .number {
-            font-size: 30px;
-            width: 40px;
-            text-align: center;
-          }
-        }
-
-        &.stops {
-          height: 45px;
-          justify-content: space-between;
-        }
-
-        &.icons {
-          height: 45px;
-          margin-right: 5px;
-          .icon {
-            width: 10px;
-          }
-        }
-
-        .from { color: $red; }
-        .to { color: $blue; }
-      }
-    }
+  .exit {
+    background: $black;
+    color: $white;
   }
 </style>

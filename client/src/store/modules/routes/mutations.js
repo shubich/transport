@@ -8,6 +8,12 @@ export default {
   [MUTATIONS.SET_ROUTE]: (state, route) => {
     state.route = route;
   },
+  [MUTATIONS.SET_ROUTES_BY_STOPS](state, routes) {
+    state.routesByStops = routes;
+  },
+  [MUTATIONS.SET_WAY]: (state, way) => {
+    state.way = way;
+  },
   [MUTATIONS.RESET](state) {
     const defaultState = initialState();
     Object.keys(defaultState).forEach((key) => {

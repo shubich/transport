@@ -19,6 +19,7 @@ export default {
   components: { VueAutocomplete },
   props: {
     placeholder: { type: String, default: 'Поиск' },
+    clearOnSelect: { type: Boolean, default: true },
     source: [String, Function, Object, Array],
     resultsProperty: String,
     resultsValue: String,
@@ -32,8 +33,19 @@ export default {
     onSelect(item) {
       this.$emit('select', item.selectedObject);
       // access the autocomplete component methods from the parent
+      if (this.clearOnSelect) {
+        this.reset();
+      }
+    },
+    reset() {
       this.$refs.autocomplete.clearValues();
     },
+  },
+  mounted() {
+    window.addEventListener('reset', this.reset);
+  },
+  beforeDestroy() {
+    window.removeEventListener('reset', this.reset);
   },
 };
 </script>

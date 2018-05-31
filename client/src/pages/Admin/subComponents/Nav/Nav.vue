@@ -49,6 +49,8 @@ export default {
   .nav {
     display: flex;
     border-bottom: 1px solid $default-border;
+    position: sticky;
+    top: 0;
   }
 
   .block{

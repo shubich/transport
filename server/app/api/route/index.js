@@ -9,6 +9,7 @@ router.route('/')
   .put(actions.editRoute)
   .delete(actions.deleteRoute);
 
+router.post('/by-stops', actions.getRoutesByStops);
 router.get('/all', actions.getAllRoutes);
 router.get('/:id', actions.getRouteByid);
 

@@ -51,7 +51,7 @@
           <td>{{item.vehicleType}}</td>
           <td>{{item.count}}</td>
           <td>{{item.passengers}}</td>
-          <td>{{item.profit}}</td>
+          <td>{{item.profit}} р.</td>
           <td>
             <router-link :to="'edit-route/'+item._id" append>
               <awesome-icon name="edit" class="icon edit"/>

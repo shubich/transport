@@ -4,6 +4,7 @@ import store from '@/store';
 import Home from '@/pages/Home';
 import Routes from '@/pages/Routes';
 import Profile from '@/pages/Profile';
+import Balance from '@/pages/Balance';
 import Admin from '@/pages/Admin';
 import CityRoutes from '@/pages/Admin/subPages/CityRoutes';
 import RouteEditor from '@/pages/Admin/subPages/RouteEditor';
@@ -34,6 +35,12 @@ const router = new Router({
       path: '/profile',
       name: 'Profile',
       component: Profile,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/profile/balance',
+      name: 'Balance',
+      component: Balance,
       meta: { requiresAuth: true },
     },
     {

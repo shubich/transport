@@ -17,7 +17,7 @@ export const RIDES = [
   },
   {
     id: 3,
-    vehicleType: 'subway',
+    vehicleType: 'trolleybus',
     vehicleNumber: '3',
     from: 'Партизанский проспект',
     to: 'Орджоникидзе',

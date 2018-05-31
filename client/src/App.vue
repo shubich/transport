@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'App',
 };
@@ -15,6 +16,7 @@ export default {
 @import './assets/styles/table';
 @import './assets/styles/form';
 @import './assets/styles/link';
+@import './assets/styles/scrollbar';
 
 body {
   margin: 0;

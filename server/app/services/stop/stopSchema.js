@@ -7,6 +7,14 @@ const StopSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  longitude: {
+    type: Number,
+    trim: true,
+  },
+  latitude: {
+    type: Number,
+    trim: true,
+  },
 });
 
 export default mongoose.model('Stop', StopSchema);
