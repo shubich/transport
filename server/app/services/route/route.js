@@ -38,6 +38,7 @@ export default class Route {
       // .sort('vehicleType number');
     const fullRoutes = await Promise.all(routes.map(async (item) => {
       let description;
+      let rides = [];
 
       if (item.stops.length) {
         const startStop = await StopService.getStopByid(item.stops[0]);
@@ -46,8 +47,12 @@ export default class Route {
       }
 
       const vehicles = await VehicleService.getVehiclesByRoute(item._id);
-      const rides = await RideService
-        .getRidesByVehicles(vehicles.map(vehicle => ({ vehicle: vehicle._id })));
+
+      if (vehicles.length) {
+        rides = await RideService
+          .getRidesByVehicles(vehicles.map(vehicle => ({ vehicle: vehicle._id })));
+      }
+
       const profit = rides.reduce((prev, cur) => prev + cur.payment, 0);
 
       return {
